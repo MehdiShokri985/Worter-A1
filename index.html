@@ -281,23 +281,22 @@
                 accordionDiv.appendChild(accordionContent);
                 container.appendChild(accordionDiv);
 
-                // Add event listener for accordion toggle
                 accordionHeader.addEventListener('click', (e) => {
-                    if (e.target.classList.contains('toggle-textbox-btn')) {
-                        return; // Prevent accordion toggle when clicking the textbox toggle button
+                    if (e.target.classList.contains('toggle-textbox-btn') || e.target.closest('.toggle-textbox-btn')) {
+                        return;
                     }
                     accordionContent.classList.toggle('active');
                 });
-
-                // Add event listener for toggle textbox button
+                
                 const toggleTextboxButton = accordionHeader.querySelector('.toggle-textbox-btn');
-                toggleTextboxButton.addEventListener('click', () => {
+                toggleTextboxButton.addEventListener('click', (e) => {
+                    e.stopPropagation();
                     const textboxes = accordionContent.querySelectorAll('.input-text');
-                    const isHidden = textboxes[0]?.style.display === 'none';
+                    const isHidden = textboxes[0]?.style.display === 'none' || textboxes[0]?.style.display === '';
                     textboxes.forEach(textbox => {
                         textbox.style.display = isHidden ? 'block' : 'none';
                     });
-                   toggleTextboxButton.textContent = isHidden ?  'Schreiben nein' : 'Mitschreiben';
+                    toggleTextboxButton.textContent = isHidden ? 'Schreiben nein' : 'Mitschreiben';
                 });
 
                 

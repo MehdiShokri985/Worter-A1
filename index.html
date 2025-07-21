@@ -269,7 +269,10 @@
                 container.appendChild(accordionDiv);
 
                 // Add event listener for accordion toggle
-                accordionHeader.addEventListener('click', () => {
+                accordionHeader.addEventListener('click', (e) => {
+                    if (e.target.classList.contains('toggle-textbox-btn')) {
+                        return; // Prevent accordion toggle when clicking the textbox toggle button
+                    }
                     accordionContent.classList.toggle('active');
                 });
 
@@ -281,15 +284,7 @@
                     textboxes.forEach(textbox => {
                         textbox.style.display = isHidden ? 'block' : 'none';
                     });
-                    toggleTextboxButton.textContent = isHidden ? 'Mitschreiben' :'Schreiben nein';
-                });
-
-                // جلوگیری از تداخل کلیک دکمه با آکاردئون
-                accordionHeader.addEventListener('click', (e) => {
-                    if (e.target.classList.contains('toggle-textbox-btn')) {
-                        return; // Prevent accordion toggle when clicking the textbox toggle button
-                    }
-                    accordionContent.classList.toggle('active');
+                   toggleTextboxButton.textContent = isHidden ? 'Mitschreiben' :'Schreiben nein';
                 });
 
                 

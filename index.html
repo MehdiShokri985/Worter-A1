@@ -83,9 +83,15 @@
             text-align: left;
             direction: ltr;
         }
-        .item-bottom .sound {
+       .item-bottom .sound {
             font-size: 1.1em;
             color: #f1c40f;
+            filter: blur(5px); /* افزودن افکت محو */
+            transition: filter 0.3s ease; /* انیمیشن برای تغییر نرم */
+            cursor: pointer; /* تغییر نشانگر ماوس به حالت کلیک‌پذیر */
+        }
+        .item-bottom .sound.revealed {
+            filter: none; /* حذف افکت محو هنگام نمایش */
         }
         .item-bottom .sentence {
             font-style: italic;
@@ -190,11 +196,17 @@
                     playButton.addEventListener('click', () => {
                         audio.play();
                     });
-
+ 
                     // Add event listener for delete button
                     const deleteButton = itemDiv.querySelector('.delete-btn');
                     deleteButton.addEventListener('click', () => {
                         itemDiv.remove();
+                    });
+
+                    // Add event listener for revealing sound text
+                    const soundText = itemDiv.querySelector('.sound');
+                    soundText.addEventListener('click', () => {
+                        soundText.classList.toggle('revealed');
                     });
                 });
 

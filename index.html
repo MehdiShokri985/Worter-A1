@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vocabulary List</title>
+    <style>
+        body {
+            background-color: #1a252f;
+            color: #f1c40f;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            direction: rtl;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .item {
+            background-color: #2c3e50;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+        .item-top {
+            
+            justify-content: flex-end;
+            align-items: center;
+            gap: 20px;
+            text-align: right;
+           
+            
+        }
+        .item-top .filename {
+            font-size: 1em;
+            font-weight: bold;
+            color: #f1c40f;
+             margin-bottom: 10px;
+        }
+        .item-top .translate {
+            font-size: 1.2em;
+            color: #ecf0f1;
+        }
+        .item-bottom {
+            margin-top: 20px;
+            text-align: left;
+            direction: ltr;
+        }
+        .item-bottom .sound {
+            font-size: 1.3em;
+            color: #f1c40f;
+        }
+        .item-bottom .sentence {
+            font-style: italic;
+            color: #3498db;
+        }
+        .item-bottom audio {
+            margin-top: 10px;
+        }
+        .item-bottom button.play-btn {
+            background-color: #f1c40f;
+            color: #2c3e50;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+            font-size: 0.90em;
+        }
+        .item-bottom button.play-btn:hover {
+            background-color: #f39c12;
+        }
+        .item-bottom button.delete-btn {
+            background-color: #e74c3c;
+            color: #ecf0f1;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+            font-size: 0.90em;
+        }
+        .item-bottom button.delete-btn:hover {
+            background-color: #c0392b;
+        }
+        @media (max-width: 600px) {
+            .item-top {
+                flex-direction: column;
+                align-items: flex-end;
+            }
+            .item-bottom {
+                width: 100%;
+                text-align: left;
+                direction: ltr;
+            }
+            .item-bottom button {
+                width: 100%;
+                margin: 10px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Items will be dynamically added here -->
+    </div>
+ 
+  <script>
+        const container = document.querySelector('.container');
+
+        function renderItems(items) {
+            container.innerHTML = '';
+            items.forEach(item => {
+               const isSentence = /[.!?]$/.test(item.Sound_de); // Check if the text ends with . or !
+                const itemDiv = document.createElement('div');
+                itemDiv.classList.add('item');
+                itemDiv.innerHTML = `
+                    <div class="item-top">
+                        <div class="filename">${item.Filename}</div>
+                        <div class="translate">${item.translate_fa}</div>
+                    </div>
+                    <div class="item-bottom">
+                        <div class="sound ${isSentence ? 'sentence' : ''}">${item.Sound_de}</div>
+                        <audio src="audio/${item.file}" preload="none"></audio>
+                        <button class="play-btn">Play Sound</button>
+                        <button class="delete-btn">Delete</button>
+                    </div>
+                `;
+                container.appendChild(itemDiv);
+
+                // Add event listener for play button
+                const playButton = itemDiv.querySelector('.play-btn');
+                const audio = itemDiv.querySelector('audio');
+                playButton.addEventListener('click', () => {
+                    audio.play();
+                });
+
+                // Add event listener for delete button
+                const deleteButton = itemDiv.querySelector('.delete-btn');
+                deleteButton.addEventListener('click', () => {
+                    itemDiv.remove();
+                });
+            });
+        }
+
+        // Fetch data from json-worter.json
+        fetch('json-worter.json')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to load JSON file');
+                }
+                return response.json();
+            })
+            .then(data => {
+                renderItems(data);
+            })
+            .catch(error => {
+                container.innerHTML = `<div class="error">خطا در بارگذاری فایل JSON: ${error.message}</div>`;
+            });
+    </script>
+</body>
+</html>

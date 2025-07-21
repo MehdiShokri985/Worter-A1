@@ -17,8 +17,36 @@
             max-width: 800px;
             margin: 0 auto;
         }
-        .item {
+        .accordion {
+            margin-bottom: 20px;
+        }
+        .accordion-header {
             background-color: #2c3e50;
+            border-radius: 10px;
+            padding: 15px;
+            cursor: pointer;
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #f1c40f;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+        .accordion-header:hover {
+            background-color: #34495e;
+        }
+        .accordion-content {
+            display: none;
+            padding: 10px;
+            background-color: #2c3e50;
+            border-radius: 0 0 10px 10px;
+        }
+        .accordion-content.active {
+            display: block;
+        }
+        .item {
+            background-color: #34495e;
             border-radius: 10px;
             padding: 20px;
             margin-bottom: 20px;
@@ -27,19 +55,16 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
         }
         .item-top {
-            
             justify-content: flex-end;
             align-items: center;
             gap: 20px;
             text-align: right;
-           
-            
         }
         .item-top .filename {
             font-size: 1em;
             font-weight: bold;
             color: #f1c40f;
-             margin-bottom: 10px;
+            margin-bottom: 10px;
         }
         .item-top .translate {
             font-size: 1.2em;
@@ -106,45 +131,73 @@
 </head>
 <body>
     <div class="container">
-        <!-- Items will be dynamically added here -->
+        <!-- Accordion groups will be dynamically added here -->
     </div>
- 
-  <script>
+
+    <script>
         const container = document.querySelector('.container');
 
         function renderItems(items) {
             container.innerHTML = '';
-            items.forEach(item => {
-               const isSentence = /[.!?]$/.test(item.Sound_de); // Check if the text ends with . or !
-                const itemDiv = document.createElement('div');
-                itemDiv.classList.add('item');
-                itemDiv.innerHTML = `
-                    <div class="item-top">
-                        <div class="filename">${item.Filename}</div>
-                        <div class="translate">${item.translate_fa}</div>
-                    </div>
-                    <div class="item-bottom">
-                        <div class="sound ${isSentence ? 'sentence' : ''}">${item.Sound_de}</div>
-                        <audio src="audio/${item.file}" preload="none"></audio>
-                        <button class="play-btn">Play Sound</button>
-                        <button class="delete-btn">Delete</button>
-                    </div>
-                `;
-                container.appendChild(itemDiv);
+            const groupSize = 100;
+            const groups = Math.ceil(items.length / groupSize);
 
-                // Add event listener for play button
-                const playButton = itemDiv.querySelector('.play-btn');
-                const audio = itemDiv.querySelector('audio');
-                playButton.addEventListener('click', () => {
-                    audio.play();
+            for (let i = 0; i < groups; i++) {
+                const start = i * groupSize;
+                const end = Math.min(start + groupSize, items.length);
+                const groupItems = items.slice(start, end);
+
+                const accordionDiv = document.createElement('div');
+                accordionDiv.classList.add('accordion');
+
+                const accordionHeader = document.createElement('div');
+                accordionHeader.classList.add('accordion-header');
+                accordionHeader.innerHTML = `گروه ${i + 1} (${start + 1} - ${end}) <span>${groupItems.length} واژه</span>`;
+                
+                const accordionContent = document.createElement('div');
+                accordionContent.classList.add('accordion-content');
+
+                groupItems.forEach(item => {
+                    const isSentence = /[.!?]$/.test(item.Sound_de);
+                    const itemDiv = document.createElement('div');
+                    itemDiv.classList.add('item');
+                    itemDiv.innerHTML = `
+                        <div class="item-top">
+                            <div class="filename">${item.Filename}</div>
+                            <div class="translate">${item.translate_fa}</div>
+                        </div>
+                        <div class="item-bottom">
+                            <div class="sound ${isSentence ? 'sentence' : ''}">${item.Sound_de}</div>
+                            <audio src="audio/${item.file}" preload="none"></audio>
+                            <button class="play-btn">Play Sound</button>
+                            <button class="delete-btn">Delete</button>
+                        </div>
+                    `;
+                    accordionContent.appendChild(itemDiv);
+
+                    // Add event listener for play button
+                    const playButton = itemDiv.querySelector('.play-btn');
+                    const audio = itemDiv.querySelector('audio');
+                    playButton.addEventListener('click', () => {
+                        audio.play();
+                    });
+
+                    // Add event listener for delete button
+                    const deleteButton = itemDiv.querySelector('.delete-btn');
+                    deleteButton.addEventListener('click', () => {
+                        itemDiv.remove();
+                    });
                 });
 
-                // Add event listener for delete button
-                const deleteButton = itemDiv.querySelector('.delete-btn');
-                deleteButton.addEventListener('click', () => {
-                    itemDiv.remove();
+                accordionDiv.appendChild(accordionHeader);
+                accordionDiv.appendChild(accordionContent);
+                container.appendChild(accordionDiv);
+
+                // Add event listener for accordion toggle
+                accordionHeader.addEventListener('click', () => {
+                    accordionContent.classList.toggle('active');
                 });
-            });
+            }
         }
 
         // Fetch data from json-worter.json

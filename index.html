@@ -155,17 +155,27 @@
         }
 
         .accordion-header .toggle-textbox-btn {
-            background-color: #122434;
-            color: #ecf0f1;
+            background-color: #00ff88; /* سبز نئونی */
+            color: #1a252f; /* رنگ متن تیره برای کنتراست */
             border: none;
             padding: 5px 10px;
             border-radius: 5px;
             cursor: pointer;
             font-size: 0.9em;
         }
-/*         .accordion-header .toggle-textbox-btn:hover {
-            background-color: #2980b9;
-        } */
+        @media (hover: hover) and (pointer: fine) {
+            .accordion-header .toggle-textbox-btn:hover {
+                background-color: #00cc6e; /* سایه تیره‌تر سبز برای hover */
+            }
+        }
+        @media (max-width: 600px) {
+            .accordion-header .toggle-textbox-btn {
+                font-size: 0.7em; /* کاهش اندازه فونت برای موبایل */
+                padding: 3px 6px; /* کاهش پدینگ برای دکمه کوچکتر */
+                min-width: 50px; /* عرض حداقل برای جای دادن "Text ein" و "Text aus" */
+                text-align: center; /* مرکز کردن متن */
+            }
+        }
                 
         @media (max-width: 600px) {
             .item-top {
@@ -210,7 +220,7 @@
                 accordionHeader.classList.add('accordion-header');
                 //accordionHeader.innerHTML = `گروه ${i + 1} (${start + 1} - ${end}) <span>${groupItems.length} واژه</span>`;
                 accordionHeader.innerHTML = ` گروه ${i + 1} (${start + 1} - ${end}) <span>${groupItems.length} واژه</span>
-                <button class="toggle-textbox-btn">Mitschreiben</button>`;
+                <button class="toggle-textbox-btn">Text ein</button>`;
                 const accordionContent = document.createElement('div');
                 accordionContent.classList.add('accordion-content');
 
@@ -296,7 +306,7 @@
                     textboxes.forEach(textbox => {
                         textbox.style.display = isHidden ? 'block' : 'none';
                     });
-                    toggleTextboxButton.textContent = isHidden ? 'Schreiben nein' : 'Mitschreiben';
+                   toggleTextboxButton.textContent = isHidden ? 'Text aus' : 'Text ein';
                 });
 
                 

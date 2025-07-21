@@ -126,6 +126,34 @@
         .item-bottom button.delete-btn:hover {
             background-color: #c0392b;
         }
+
+        .item-bottom .input-text {
+            margin-top: 10px;
+            padding: 5px;
+            font-size: 1em;
+            width: 100%;
+            border-radius: 5px;
+            border: none;
+            display: none;
+        }
+        .item-bottom .input-text.correct {
+            background-color: #2ecc71;
+            color: #fff;
+        }
+
+        .accordion-header .toggle-textbox-btn {
+            background-color: #3498db;
+            color: #ecf0f1;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9em;
+        }
+        .accordion-header .toggle-textbox-btn:hover {
+            background-color: #2980b9;
+        }
+                
         @media (max-width: 600px) {
             .item-top {
                 flex-direction: column;
@@ -167,8 +195,9 @@
 
                 const accordionHeader = document.createElement('div');
                 accordionHeader.classList.add('accordion-header');
-                accordionHeader.innerHTML = `گروه ${i + 1} (${start + 1} - ${end}) <span>${groupItems.length} واژه</span>`;
-                
+                //accordionHeader.innerHTML = `گروه ${i + 1} (${start + 1} - ${end}) <span>${groupItems.length} واژه</span>`;
+                accordionHeader.innerHTML = ` گروه ${i + 1} (${start + 1} - ${end}) <span>${groupItems.length} واژه</span>
+                <button class="toggle-textbox-btn">Schreiben</button>`;
                 const accordionContent = document.createElement('div');
                 accordionContent.classList.add('accordion-content');
 
@@ -176,6 +205,19 @@
                     const isSentence = /[.!?]$/.test(item.Sound_de);
                     const itemDiv = document.createElement('div');
                     itemDiv.classList.add('item');
+                    // itemDiv.innerHTML = `
+                    //     <div class="item-top">
+                    //         <div class="filename">${item.Filename}</div>
+                    //         <div class="translate">${item.translate_fa}</div>
+                    //     </div>
+                    //     <div class="item-bottom">
+                    //         <div class="sound ${isSentence ? 'sentence' : ''}">${item.Sound_de}</div>
+                    //         <audio src="audio/${item.file}" preload="none"></audio>
+                    //         <button class="play-btn">Play Sound</button>
+                    //         <button class="delete-btn">Delete</button>
+                    //     </div>
+                    // `;
+
                     itemDiv.innerHTML = `
                         <div class="item-top">
                             <div class="filename">${item.Filename}</div>
@@ -183,11 +225,13 @@
                         </div>
                         <div class="item-bottom">
                             <div class="sound ${isSentence ? 'sentence' : ''}">${item.Sound_de}</div>
+                            <input type="text" class="input-text" placeholder="Testen Sie Ihr Schreiben.">
                             <audio src="audio/${item.file}" preload="none"></audio>
                             <button class="play-btn">Play Sound</button>
                             <button class="delete-btn">Delete</button>
                         </div>
                     `;
+                    
                     accordionContent.appendChild(itemDiv);
 
                     // Add event listener for play button
@@ -208,6 +252,16 @@
                     soundText.addEventListener('click', () => {
                         soundText.classList.toggle('revealed');
                     });
+
+                    // Add event listener for input text
+                    const inputText = itemDiv.querySelector('.input-text');
+                    inputText.addEventListener('input', () => {
+                        if (inputText.value.trim() === item.Sound_de) {
+                            inputText.classList.add('correct');
+                        } else {
+                            inputText.classList.remove('correct');
+                        }
+                    });
                 });
 
                 accordionDiv.appendChild(accordionHeader);
@@ -218,6 +272,19 @@
                 accordionHeader.addEventListener('click', () => {
                     accordionContent.classList.toggle('active');
                 });
+
+                // Add event listener for toggle textbox button
+                const toggleTextboxButton = accordionHeader.querySelector('.toggle-textbox-btn');
+                toggleTextboxButton.addEventListener('click', () => {
+                    const textboxes = accordionContent.querySelectorAll('.input-text');
+                    const isHidden = textboxes[0]?.style.display === 'none';
+                    textboxes.forEach(textbox => {
+                        textbox.style.display = isHidden ? 'block' : 'none';
+                    });
+                    toggleTextboxButton.textContent = isHidden ? 'Mitschreiben' :'Schreiben nein';
+                });
+
+                
             }
         }
 

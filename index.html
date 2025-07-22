@@ -9,27 +9,30 @@
         body {
             background-color: #1a252f;
             color: #f1c40f;
-            font-family: 'Vazir', Arial, sans-serif; /* تغییر فونت */
+            font-family: 'Vazir', Arial, sans-serif;
             margin: 0;
             padding: 20px;
             direction: rtl;
         }
 
-         h1 {
+        h1 {
             text-align: center;
             color: #5b87b8;
             font-size: 2em;
             margin-bottom: 30px;
         }
+
         .container {
             max-width: 800px;
             margin: 0 auto;
-            position: relative; /* نگه داشتن برای sticky headers */
+            position: relative;
         }
+
         .accordion {
             margin-bottom: 20px;
         }
-       .accordion-header {
+
+        .accordion-header {
             background-color: #2c3e50;
             border-radius: 10px;
             padding: 15px;
@@ -44,7 +47,7 @@
             top: 0;
             z-index: 10;
         }
-       /* غیرفعال کردن hover در موبایل */
+
         @media (hover: hover) and (pointer: fine) {
             .accordion-header:hover {
                 background-color: #34495e;
@@ -55,42 +58,45 @@
             .item-bottom button.delete-btn:hover {
                 background-color: #c0392b;
             }
-
+            .item-bottom button.reveal-btn:hover,
+            .item-bottom button.hide-btn:hover {
+                background-color: #71cfe7;
+            }
         }
-        
+
         .accordion-content {
-        display: none;
-        padding: 10px;
-        background-color: #2c3e50;
-        border-radius: 6px 6px 10px 10px;
-        max-height: calc(100vh - 150px); /* تنظیم ارتفاع برای محتوا */
-        overflow-y: auto; /* فعال کردن اسکرول عمودی */
-        /* استایل‌دهی به اسکرول‌بار */
-        scrollbar-width: thin; /* عرض اسکرول‌بار در فایرفاکس */
-        scrollbar-color: #00ff88 #34495e; /* رنگ اسکرول‌بار */
-       }
-    
-    /* استایل‌دهی به اسکرول‌بار در مرورگرهای مبتنی بر Webkit (کروم، سافاری) */
-       .accordion-content::-webkit-scrollbar {
+            display: none;
+            padding: 10px;
+            background-color: #2c3e50;
+            border-radius: 6px 6px 10px 10px;
+            max-height: calc(100vh - 150px);
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: #00ff88 #34495e;
+        }
+
+        .accordion-content::-webkit-scrollbar {
             width: 8px;
         }
-        
+
         .accordion-content::-webkit-scrollbar-track {
             background: #34495e;
             border-radius: 10px;
         }
-        
+
         .accordion-content::-webkit-scrollbar-thumb {
             background: #00ff88;
             border-radius: 10px;
         }
-        
+
         .accordion-content::-webkit-scrollbar-thumb:hover {
             background: #00cc6e;
         }
+
         .accordion-content.active {
             display: block;
         }
+
         .item {
             background-color: #34495e;
             border-radius: 10px;
@@ -100,67 +106,127 @@
             flex-direction: column;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
         }
+
         .item-top {
             justify-content: flex-end;
             align-items: center;
             gap: 20px;
             text-align: right;
         }
+
         .item-top .filename {
             font-size: 1.1em;
             font-weight: bold;
             color: #03152f;
             margin-bottom: 10px;
         }
+
         .item-top .translate {
             font-size: 1.2em;
             color: #ecf0f1;
         }
+
         .item-bottom {
             margin-top: 20px;
             text-align: left;
             direction: ltr;
+            position: relative;
         }
-       .item-bottom .sound {
+
+        .item-bottom .sound {
             font-size: 1.2em;
             color: #9bff94;
-            filter: blur(5px); /* افزودن افکت محو */
-            transition: filter 0.3s ease; /* انیمیشن برای تغییر نرم */
-            cursor: pointer; /* تغییر نشانگر ماوس به حالت کلیک‌پذیر */
+            cursor: pointer;
+            margin-bottom: 10px;
         }
-        .item-bottom .sound.revealed {
-            filter: none; /* حذف افکت محو هنگام نمایش */
+
+        .item-bottom .sound span {
+            filter: blur(5px);
+            transition: filter 0.3s ease;
         }
+
+        .item-bottom .sound span.revealed {
+            filter: none;
+        }
+
         .item-bottom .sentence {
             font-style: italic;
             color: #3498db;
         }
+
         .item-bottom audio {
             margin-top: 10px;
         }
-        .item-bottom button.play-btn {
-            background-color: #c9a204;
+
+        /* هماهنگی دکمه‌های Play و Delete برای تراز بهتر */
+        .item-bottom button.play-btn,
+        .item-bottom button.delete-btn {
+            background-color: #c9a204; /* رنگ دکمه Play */
             color: #2c3e50;
             border: none;
-            padding: 5px 10px;
-            border-radius: 5px;
+            padding: 8px 12px;
+            border-radius: 5px; /* گوشه‌های گردتر برای هماهنگی */
             cursor: pointer;
-            margin-top: 20px;
-            font-size: 0.90em;
+            font-size: 0.9em;
+            height: 30px; /* ارتفاع یکسان با دکمه‌های مثبت و منفی */
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* سایه مشابه */
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
 
         .item-bottom button.delete-btn {
-            background-color: #cc594e;
+            background-color: #cc594e; /* رنگ دکمه Delete */
             color: #ecf0f1;
-            border: none;
-            padding: 5px 10px;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-top: 20px;
-            font-size: 0.90em;
         }
 
+        .item-bottom button.play-btn:hover {
+            background-color: #f39c12;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+        
+        .item-bottom button.delete-btn:hover {
+            background-color: #c0392b;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
 
+        .item-bottom .control-buttons {
+            position: absolute;
+            bottom: 0px;
+            right: 5px;
+            display: flex;
+            gap: 8px; /* فاصله بین دکمه‌ها */
+            align-items: center; /* تراز عمودی */
+        }
+
+        .item-bottom button.reveal-btn,
+        .item-bottom button.hide-btn {
+            background-color: #4c89bb;
+            color: #1a252f;
+            border: none;
+            padding: 8px; /* پدینگ بیشتر برای اندازه مشابه با دکمه‌های دیگر */
+            border-radius: 5px; /* گوشه‌های گردتر */
+            cursor: pointer;
+            font-size: 1em; /* اندازه فونت مشابه دکمه‌های دیگر */
+            width: 40px; /* عرض ثابت برای هماهنگی */
+            height: 30px; /* ارتفاع ثابت برای هماهنگی */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* سایه ملایم */
+            transition: transform 0.2s ease, box-shadow 0.2s ease; /* انیمیشن نرم */
+        }
+
+        .item-bottom button.reveal-btn:hover,
+        .item-bottom button.hide-btn:hover {
+            background-color:#71cfe7
+            transform: translateY(-2px); /* حرکت به سمت بالا در hover */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* سایه قوی‌تر */
+        }
+        
         .item-bottom .input-text {
             margin-top: 10px;
             padding: 5px;
@@ -170,15 +236,17 @@
             border: none;
             display: none;
             background-color: #aed2f5;
+            margin-bottom: 10px;
         }
+
         .item-bottom .input-text.correct {
             background-color: #2ecc71;
             color: #fff;
         }
 
         .accordion-header .toggle-textbox-btn {
-            background-color: #00ff88; /* سبز نئونی */
-            color: #1a252f; /* رنگ متن تیره برای کنتراست */
+            background-color: #00ff88;
+            color: #1a252f;
             border: none;
             padding: 5px 10px;
             border-radius: 5px;
@@ -186,46 +254,71 @@
             font-size: 0.9em;
         }
 
-          .accordion-header .toggle-textbox-btn:disabled {
+        .accordion-header .toggle-textbox-btn:disabled {
             background-color: #cccccc;
             cursor: not-allowed;
             opacity: 0.6;
         }
-        
-        @media (hover: hover) and (pointer: fine) {
-            .accordion-header .toggle-textbox-btn:hover:not(:disabled) {
-                background-color: #00cc6e;
-            }
-        }
-        
-       
+
+
+
         @media (max-width: 600px) {
             .accordion-header .toggle-textbox-btn {
-                font-size: 0.7em; /* کاهش اندازه فونت برای موبایل */
-                padding: 3px 6px; /* کاهش پدینگ برای دکمه کوچکتر */
-                min-width: 50px; /* عرض حداقل برای جای دادن "Text ein" و "Text aus" */
-                text-align: center; /* مرکز کردن متن */
+                font-size: 0.7em;
+                padding: 3px 6px;
+                min-width: 50px;
+                text-align: center;
             }
-        }
-                
-        @media (max-width: 600px) {
+
             .item-top {
                 flex-direction: column;
                 align-items: flex-end;
             }
+
             .item-bottom {
                 width: 100%;
                 text-align: left;
                 direction: ltr;
             }
+
             .item-bottom button {
                 margin: 10px 0;
+            }
+
+            .item-bottom button.reveal-btn,
+            .item-bottom button.hide-btn {
+                width: 25px;
+                font-size: 0.7em;
+                padding: 3px;
+            }
+        }
+
+                        /* استایل برای نسخه موبایل */
+        @media (max-width: 600px) {
+            .item-bottom .control-buttons {
+                gap: 5px; /* فاصله کمتر در موبایل */
+            }
+        
+            .item-bottom button.reveal-btn,
+            .item-bottom button.hide-btn {
+                width: 35px; /* اندازه کمی کوچکتر برای موبایل */
+                height: 30px;
+                font-size: 0.9em;
+                padding: 6px;
+                border-radius: 5px;
+            }
+        
+            .item-bottom button.play-btn,
+            .item-bottom button.delete-btn {
+                height: 30px; /* ارتفاع هماهنگ در موبایل */
+                font-size: 0.8em;
+                padding: 6px 10px;
             }
         }
     </style>
 </head>
 <body>
-    <h1>یادگیری 1731 واژه سطح A1</h1>
+    <h1>یادگیری 3346 واژه سطح A2</h1>
     <div class="container">
         <!-- Accordion groups will be dynamically added here -->
     </div>
@@ -237,19 +330,38 @@
             const isSentence = /[.!?]$/.test(item.Sound_de);
             const itemDiv = document.createElement('div');
             itemDiv.classList.add('item');
+
+            // Split text into characters (for words) or words (for sentences)
+            let soundContent = '';
+            if (isSentence) {
+                const words = item.Sound_de.split(' ');
+                soundContent = words.map(word => `<span>${word}</span>`).join(' ');
+            } else {
+                const chars = item.Sound_de.split('');
+                soundContent = chars.map(char => `<span>${char}</span>`).join('');
+            }
+
             itemDiv.innerHTML = `
                 <div class="item-top">
                     <div class="filename">${item.Filename}</div>
                     <div class="translate">${item.translate_fa}</div>
                 </div>
                 <div class="item-bottom">
-                    <div class="sound ${isSentence ? 'sentence' : ''}">${item.Sound_de}</div>
+                    <div class="sound ${isSentence ? 'sentence' : ''}">${soundContent}</div>
                     <input type="text" class="input-text" placeholder="Testen Sie Ihr Schreiben.">
                     <audio src="audio/${item.file}" preload="none"></audio>
                     <button class="play-btn">Play Sound</button>
                     <button class="delete-btn">Delete</button>
+                    <div class="control-buttons">
+                        <button class="reveal-btn">+</button>
+                        <button class="hide-btn">-</button>
+                    </div>
                 </div>
             `;
+
+            // Initialize reveal/hide indices
+            itemDiv.dataset.revealIndex = '0';
+            itemDiv.dataset.hideIndex = '0';
 
             // Add event listener for play button
             const playButton = itemDiv.querySelector('.play-btn');
@@ -264,10 +376,41 @@
                 itemDiv.remove();
             });
 
-            // Add event listener for revealing sound text
+            // Add event listener for revealing/hiding sound text on click
             const soundText = itemDiv.querySelector('.sound');
             soundText.addEventListener('click', () => {
-                soundText.classList.toggle('revealed');
+                const spans = soundText.querySelectorAll('span');
+                const allRevealed = Array.from(spans).every(span => span.classList.contains('revealed'));
+                spans.forEach(span => {
+                    span.classList.toggle('revealed', !allRevealed);
+                });
+                itemDiv.dataset.revealIndex = allRevealed ? '0' : spans.length;
+                itemDiv.dataset.hideIndex = allRevealed ? '0' : spans.length;
+            });
+
+            // Add event listeners for reveal/hide buttons
+            const revealButton = itemDiv.querySelector('.reveal-btn');
+            const hideButton = itemDiv.querySelector('.hide-btn');
+            const spans = soundText.querySelectorAll('span');
+
+            revealButton.addEventListener('click', () => {
+                let revealIndex = parseInt(itemDiv.dataset.revealIndex);
+                if (revealIndex < spans.length) {
+                    spans[revealIndex].classList.add('revealed');
+                    revealIndex++;
+                    itemDiv.dataset.revealIndex = revealIndex;
+                    itemDiv.dataset.hideIndex = revealIndex;
+                }
+            });
+
+            hideButton.addEventListener('click', () => {
+                let hideIndex = parseInt(itemDiv.dataset.hideIndex);
+                if (hideIndex > 0) {
+                    hideIndex--;
+                    spans[hideIndex].classList.remove('revealed');
+                    itemDiv.dataset.revealIndex = hideIndex;
+                    itemDiv.dataset.hideIndex = hideIndex;
+                }
             });
 
             // Add event listener for input text

@@ -292,9 +292,10 @@
                     } else {
                         // Create items when opening
                         const groupIndex = parseInt(accordionContent.dataset.groupIndex);
-                        const groupJrstart = groupIndex * groupSize;
+                        const groupStart = groupIndex * groupSize;
                         const groupEnd = Math.min(groupStart + groupSize, items.length);
                         const currentGroupItems = items.slice(groupStart, groupEnd);
+                      
 
                         currentGroupItems.forEach(item => {
                             const itemDiv = createItem(item);

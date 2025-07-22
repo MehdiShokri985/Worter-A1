@@ -164,11 +164,20 @@
             cursor: pointer;
             font-size: 0.9em;
         }
+
+          .accordion-header .toggle-textbox-btn:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+        
         @media (hover: hover) and (pointer: fine) {
-            .accordion-header .toggle-textbox-btn:hover {
-                background-color: #00cc6e; /* سایه تیره‌تر سبز برای hover */
+            .accordion-header .toggle-textbox-btn:hover:not(:disabled) {
+                background-color: #00cc6e;
             }
         }
+        
+       
         @media (max-width: 600px) {
             .accordion-header .toggle-textbox-btn {
                 font-size: 0.7em; /* کاهش اندازه فونت برای موبایل */
@@ -269,7 +278,7 @@
                 const accordionHeader = document.createElement('div');
                 accordionHeader.classList.add('accordion-header');
                 accordionHeader.innerHTML = `گروه ${i + 1} (${start + 1} - ${end}) 
-                    <button class="toggle-textbox-btn">Text ein</button>`;
+                                <button class="toggle-textbox-btn" disabled>Text ein</button>`;
 
                 const accordionContent = document.createElement('div');
                 accordionContent.classList.add('accordion-content');
@@ -290,10 +299,17 @@
                         if (content !== accordionContent && content.classList.contains('active')) {
                             content.classList.remove('active');
                             content.innerHTML = ''; // Clear content of other accordions
+                            const otherHeader = content.previousElementSibling;
+                            const otherToggleButton = otherHeader.querySelector('.toggle-textbox-btn');
+                            otherToggleButton.disabled = true; // Disable button for closed accordions
+                            otherToggleButton.textContent = 'Text ein'; // Reset button text
                         }
                     });
                     
+                    // Toggle the clicked accordion
                     accordionContent.classList.toggle('active');
+                    const toggleTextboxButton = accordionHeader.querySelector('.toggle-textbox-btn');
+                    toggleTextboxButton.disabled = !accordionContent.classList.contains('active'); // Enable/disable button based on accordion state
 
                     if (isActive) {
                         // Clear content when closing

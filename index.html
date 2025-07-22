@@ -204,6 +204,56 @@
     <script>
         const container = document.querySelector('.container');
 
+        function createItem(item) {
+            const isSentence = /[.!?]$/.test(item.Sound_de);
+            const itemDiv = document.createElement('div');
+            itemDiv.classList.add('item');
+            itemDiv.innerHTML = `
+                <div class="item-top">
+                    <div class="filename">${item.Filename}</div>
+                    <div class="translate">${item.translate_fa}</div>
+                </div>
+                <div class="item-bottom">
+                    <div class="sound ${isSentence ? 'sentence' : ''}">${item.Sound_de}</div>
+                    <input type="text" class="input-text" placeholder="Testen Sie Ihr Schreiben.">
+                    <audio src="audio/${item.file}" preload="none"></audio>
+                    <button class="play-btn">Play Sound</button>
+                    <button class="delete-btn">Delete</button>
+                </div>
+            `;
+
+            // Add event listener for play button
+            const playButton = itemDiv.querySelector('.play-btn');
+            const audio = itemDiv.querySelector('audio');
+            playButton.addEventListener('click', () => {
+                audio.play();
+            });
+
+            // Add event listener for delete button
+            const deleteButton = itemDiv.querySelector('.delete-btn');
+            deleteButton.addEventListener('click', () => {
+                itemDiv.remove();
+            });
+
+            // Add event listener for revealing sound text
+            const soundText = itemDiv.querySelector('.sound');
+            soundText.addEventListener('click', () => {
+                soundText.classList.toggle('revealed');
+            });
+
+            // Add event listener for input text
+            const inputText = itemDiv.querySelector('.input-text');
+            inputText.addEventListener('input', () => {
+                if (inputText.value.trim() === item.Sound_de) {
+                    inputText.classList.add('correct');
+                } else {
+                    inputText.classList.remove('correct');
+                }
+            });
+
+            return itemDiv;
+        }
+
         function renderItems(items) {
             container.innerHTML = '';
             const groupSize = 100;
@@ -212,81 +262,18 @@
             for (let i = 0; i < groups; i++) {
                 const start = i * groupSize;
                 const end = Math.min(start + groupSize, items.length);
-                const groupItems = items.slice(start, end);
 
                 const accordionDiv = document.createElement('div');
                 accordionDiv.classList.add('accordion');
 
                 const accordionHeader = document.createElement('div');
                 accordionHeader.classList.add('accordion-header');
-                //accordionHeader.innerHTML = `گروه ${i + 1} (${start + 1} - ${end}) <span>${groupItems.length} واژه</span>`;
-                accordionHeader.innerHTML = ` گروه ${i + 1} (${start + 1} - ${end}) 
-                <button class="toggle-textbox-btn">Text ein</button>`;
+                accordionHeader.innerHTML = `گروه ${i + 1} (${start + 1} - ${end}) 
+                    <button class="toggle-textbox-btn">Text ein</button>`;
+
                 const accordionContent = document.createElement('div');
                 accordionContent.classList.add('accordion-content');
-
-                groupItems.forEach(item => {
-                    const isSentence = /[.!?]$/.test(item.Sound_de);
-                    const itemDiv = document.createElement('div');
-                    itemDiv.classList.add('item');
-                    // itemDiv.innerHTML = `
-                    //     <div class="item-top">
-                    //         <div class="filename">${item.Filename}</div>
-                    //         <div class="translate">${item.translate_fa}</div>
-                    //     </div>
-                    //     <div class="item-bottom">
-                    //         <div class="sound ${isSentence ? 'sentence' : ''}">${item.Sound_de}</div>
-                    //         <audio src="audio/${item.file}" preload="none"></audio>
-                    //         <button class="play-btn">Play Sound</button>
-                    //         <button class="delete-btn">Delete</button>
-                    //     </div>
-                    // `;
-
-                    itemDiv.innerHTML = `
-                        <div class="item-top">
-                            <div class="filename">${item.Filename}</div>
-                            <div class="translate">${item.translate_fa}</div>
-                        </div>
-                        <div class="item-bottom">
-                            <div class="sound ${isSentence ? 'sentence' : ''}">${item.Sound_de}</div>
-                            <input type="text" class="input-text" placeholder="Testen Sie Ihr Schreiben.">
-                            <audio src="audio/${item.file}" preload="none"></audio>
-                            <button class="play-btn">Play Sound</button>
-                            <button class="delete-btn">Delete</button>
-                        </div>
-                    `;
-                    
-                    accordionContent.appendChild(itemDiv);
-
-                    // Add event listener for play button
-                    const playButton = itemDiv.querySelector('.play-btn');
-                    const audio = itemDiv.querySelector('audio');
-                    playButton.addEventListener('click', () => {
-                        audio.play();
-                    });
- 
-                    // Add event listener for delete button
-                    const deleteButton = itemDiv.querySelector('.delete-btn');
-                    deleteButton.addEventListener('click', () => {
-                        itemDiv.remove();
-                    });
-
-                    // Add event listener for revealing sound text
-                    const soundText = itemDiv.querySelector('.sound');
-                    soundText.addEventListener('click', () => {
-                        soundText.classList.toggle('revealed');
-                    });
-
-                    // Add event listener for input text
-                    const inputText = itemDiv.querySelector('.input-text');
-                    inputText.addEventListener('input', () => {
-                        if (inputText.value.trim() === item.Sound_de) {
-                            inputText.classList.add('correct');
-                        } else {
-                            inputText.classList.remove('correct');
-                        }
-                    });
-                });
+                accordionContent.dataset.groupIndex = i; // Store group index for reference
 
                 accordionDiv.appendChild(accordionHeader);
                 accordionDiv.appendChild(accordionContent);
@@ -296,9 +283,26 @@
                     if (e.target.classList.contains('toggle-textbox-btn') || e.target.closest('.toggle-textbox-btn')) {
                         return;
                     }
+                    const isActive = accordionContent.classList.contains('active');
                     accordionContent.classList.toggle('active');
+
+                    if (isActive) {
+                        // Clear content when closing
+                        accordionContent.innerHTML = '';
+                    } else {
+                        // Create items when opening
+                        const groupIndex = parseInt(accordionContent.dataset.groupIndex);
+                        const groupJrstart = groupIndex * groupSize;
+                        const groupEnd = Math.min(groupStart + groupSize, items.length);
+                        const currentGroupItems = items.slice(groupStart, groupEnd);
+
+                        currentGroupItems.forEach(item => {
+                            const itemDiv = createItem(item);
+                            accordionContent.appendChild(itemDiv);
+                        });
+                    }
                 });
-                
+
                 const toggleTextboxButton = accordionHeader.querySelector('.toggle-textbox-btn');
                 toggleTextboxButton.addEventListener('click', (e) => {
                     e.stopPropagation();
@@ -307,10 +311,8 @@
                     textboxes.forEach(textbox => {
                         textbox.style.display = isHidden ? 'block' : 'none';
                     });
-                   toggleTextboxButton.textContent = isHidden ? 'Text aus' : 'Text ein';
+                    toggleTextboxButton.textContent = isHidden ? 'Text aus' : 'Text ein';
                 });
-
-                
             }
         }
 

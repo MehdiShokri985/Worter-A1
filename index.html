@@ -284,6 +284,15 @@
                         return;
                     }
                     const isActive = accordionContent.classList.contains('active');
+
+                    // Close all other accordions
+                    document.querySelectorAll('.accordion-content').forEach(content => {
+                        if (content !== accordionContent && content.classList.contains('active')) {
+                            content.classList.remove('active');
+                            content.innerHTML = ''; // Clear content of other accordions
+                        }
+                    });
+                    
                     accordionContent.classList.toggle('active');
 
                     if (isActive) {

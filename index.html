@@ -314,6 +314,7 @@
                     if (isActive) {
                         // Clear content when closing
                         accordionContent.innerHTML = '';
+                        toggleTextboxButton.textContent = 'Text ein';
                     } else {
                         // Create items when opening
                         const groupIndex = parseInt(accordionContent.dataset.groupIndex);

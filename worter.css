@@ -169,7 +169,7 @@
             border-radius: 5px; /* گوشه‌های گردتر برای هماهنگی */
             cursor: pointer;
             font-size: 0.9em;
-            height: 30px; /* ارتفاع یکسان با دکمه‌های مثبت و منفی */
+            height: 20px; /* ارتفاع یکسان با دکمه‌های مثبت و منفی */
             display: inline-flex;
             align-items: center;
             justify-content: center;
@@ -213,7 +213,7 @@
             cursor: pointer;
             font-size: 1em; /* اندازه فونت مشابه دکمه‌های دیگر */
             width: 40px; /* عرض ثابت برای هماهنگی */
-            height: 30px; /* ارتفاع ثابت برای هماهنگی */
+            height: 20px; /* ارتفاع ثابت برای هماهنگی */
             display: flex;
             justify-content: center;
             align-items: center;

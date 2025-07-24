@@ -18,8 +18,8 @@
             border-bottom: 3px solid #f1c40f; /* خط زیرین زرد */
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); /* سایه ملایم */
             display: block;
-            max-width: 800px;
-            font-weight: 100;
+             max-width: 800px;
+             font-weight: 100;
         }
 
         .container {
@@ -59,10 +59,7 @@
             .item-bottom button.delete-btn:hover {
                 background-color: #c0392b;
             }
-            .item-bottom button.reveal-btn:hover,
-            .item-bottom button.hide-btn:hover {
-                background-color: #71cfe7;
-            }
+
         }
 
         .accordion-content {
@@ -203,30 +200,65 @@
             align-items: center; /* تراز عمودی */
         }
 
-        .item-bottom button.reveal-btn,
-        .item-bottom button.hide-btn {
-            background-color: #4c89bb;
-            color: #1a252f;
-            border: none;
-            padding: 8px; /* پدینگ بیشتر برای اندازه مشابه با دکمه‌های دیگر */
-            border-radius: 5px; /* گوشه‌های گردتر */
+        .item-bottom input[type="range"] {
+            width: 120px; /* عرض کمی بیشتر برای ظاهر بهتر */
+            height: 8px; /* ضخامت مسیر اسلایدر */
+            background: #34495e; /* رنگ مسیر هماهنگ با پس‌زمینه آیتم */
+            border-radius: 4px; /* گوشه‌های گرد ملایم */
             cursor: pointer;
-            font-size: 1em; /* اندازه فونت مشابه دکمه‌های دیگر */
-            width: 40px; /* عرض ثابت برای هماهنگی */
-            height: 20px; /* ارتفاع ثابت برای هماهنگی */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* سایه ملایم */
-            transition: transform 0.2s ease, box-shadow 0.2s ease; /* انیمیشن نرم */
+            -webkit-appearance: none;
+            appearance: none;
+            outline: none;
+            transition: background 0.2s ease;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2); /* سایه ملایم برای عمق */
         }
 
-        .item-bottom button.reveal-btn:hover,
-        .item-bottom button.hide-btn:hover {
-            background-color:#71cfe7;
-            transform: translateY(-2px); /* حرکت به سمت بالا در hover */
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* سایه قوی‌تر */
+        .item-bottom input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 18px; /* اندازه دستگیره */
+            height: 18px;
+            background: #00ff88; /* رنگ سبز روشن هماهنگ با تم */
+            border-radius: 50%; /* دستگیره دایره‌ای */
+            cursor: pointer;
+            border: 2px solid #2c3e50; /* حاشیه تیره برای کنتراست */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); /* سایه برای برجستگی */
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
+
+        .item-bottom input[type="range"]::-webkit-slider-thumb:hover {
+            transform: scale(1.1); /* بزرگ شدن دستگیره هنگام هاور */
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.4); /* سایه قوی‌تر */
+        }
+
+        .item-bottom input[type="range"]::-moz-range-thumb {
+            width: 14px; /* اندازه کمی کوچکتر برای فایرفاکس */
+            height: 14px;
+            background: #00ff88;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid #2c3e50;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .item-bottom input[type="range"]::-moz-range-thumb:hover {
+            transform: scale(1.1);
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.4);
+        }
+
+        .item-bottom input[type="range"]::-webkit-slider-runnable-track {
+            background: #34495e;
+            height: 8px;
+            border-radius: 4px;
+        }
+
+        .item-bottom input[type="range"]::-moz-range-track {
+            background: #34495e;
+            height: 8px;
+            border-radius: 4px;
+        }
+
         
         .item-bottom .input-text {
             margin-top: 10px;
@@ -274,11 +306,11 @@
                 text-align: center;
             }
 
-            .item {
+             .item {
          
-                padding: 20px 20px 5px 20px;
-                margin-bottom: 10px;
-            }
+            padding: 20px 20px 5px 20px;
+            margin-bottom: 10px;
+             }
 
             .item-top {
                 flex-direction: column;
@@ -295,11 +327,19 @@
                 margin: 10px 0;
             }
 
-            .item-bottom button.reveal-btn,
-            .item-bottom button.hide-btn {
-                width: 25px;
-                font-size: 0.7em;
-                padding: 3px;
+            .item-bottom input[type="range"] {
+                width: 100px; /* عرض کوچکتر برای موبایل */
+                height: 6px; /* مسیر نازک‌تر برای موبایل */
+            }
+
+            .item-bottom input[type="range"]::-webkit-slider-thumb {
+                width: 16px;
+                height: 16px;
+            }
+
+            .item-bottom input[type="range"]::-moz-range-thumb {
+                width: 12px;
+                height: 12px;
             }
         }
 
@@ -308,15 +348,7 @@
             .item-bottom .control-buttons {
                 gap: 5px; /* فاصله کمتر در موبایل */
             }
-        
-            .item-bottom button.reveal-btn,
-            .item-bottom button.hide-btn {
-                width: 35px; /* اندازه کمی کوچکتر برای موبایل */
-                height: 20px;
-                font-size: 0.9em;
-                padding: 6px;
-                border-radius: 5px;
-            }
+
         
             .item-bottom button.play-btn,
             .item-bottom button.delete-btn {

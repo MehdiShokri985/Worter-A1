@@ -101,7 +101,7 @@
         .item {
             background-color: #34495e;
             border-radius: 10px;
-            padding: 20px 20px 5px 20px;
+            padding: 20px;
             margin-bottom: 10px;
             display: flex;
             flex-direction: column;
@@ -272,6 +272,12 @@
                 padding: 3px 6px;
                 min-width: 50px;
                 text-align: center;
+            }
+
+            .item {
+         
+                padding: 20px 20px 5px 20px;
+                margin-bottom: 10px;
             }
 
             .item-top {

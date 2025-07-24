@@ -57,7 +57,8 @@ function createItem(item) {
 
   // Add event listener for revealing/hiding sound text on click
   const soundText = itemDiv.querySelector(".sound");
-soundText.addEventListener('click', () => {
+
+  soundText.addEventListener('click', () => {
                 const spans = soundText.querySelectorAll('span');
                 const allRevealed = Array.from(spans).every(span => span.classList.contains('revealed'));
                 spans.forEach(span => {
@@ -66,9 +67,12 @@ soundText.addEventListener('click', () => {
                 itemDiv.dataset.revealIndex = allRevealed ? '0' : spans.length;
                 const slider = itemDiv.querySelector('.reveal-slider');
                 slider.value = allRevealed ? 0 : spans.length;
+                const percentage = (slider.value / maxSliderValue) * 100;
+                slider.style.background = `linear-gradient(to right, #00ff88 ${percentage}%, #34495e ${percentage}%)`;
             });
 
-  const slider = itemDiv.querySelector('.reveal-slider');
+
+    const slider = itemDiv.querySelector('.reveal-slider');
             slider.addEventListener('input', () => {
                 const revealIndex = parseInt(slider.value);
                 const spans = soundText.querySelectorAll('span');
@@ -76,7 +80,10 @@ soundText.addEventListener('click', () => {
                     span.classList.toggle('revealed', index < revealIndex);
                 });
                 itemDiv.dataset.revealIndex = revealIndex;
+                const percentage = (revealIndex / maxSliderValue) * 100;
+                slider.style.background = `linear-gradient(to right, #00ff88 ${percentage}%, #34495e ${percentage}%)`;
             });
+
 
 
   // Add event listener for input text

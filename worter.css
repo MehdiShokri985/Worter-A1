@@ -255,6 +255,7 @@
             font-size: 0.9em;
             align-items: center;
             height: 20px;
+            display: inline-flex;
         }
 
         .accordion-header .toggle-textbox-btn:disabled {

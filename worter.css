@@ -253,6 +253,8 @@
             border-radius: 5px;
             cursor: pointer;
             font-size: 0.9em;
+            align-items: center;
+            height: 20px;
         }
 
         .accordion-header .toggle-textbox-btn:disabled {

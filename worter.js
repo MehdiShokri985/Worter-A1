@@ -114,8 +114,10 @@
 
                 const accordionHeader = document.createElement('div');
                 accordionHeader.classList.add('accordion-header');
-                accordionHeader.innerHTML = `گروه ${i + 1} (${start + 1} - ${end}) 
-                                <button class="toggle-textbox-btn" disabled>Text ein</button>`;
+                accordionHeader.innerHTML = `
+                    <span>Gruppe ${i + 1} (${start + 1} - ${end})</span>
+                    <button class="toggle-textbox-btn" disabled>Text ein</button>
+                `;
 
                 const accordionContent = document.createElement('div');
                 accordionContent.classList.add('accordion-content');

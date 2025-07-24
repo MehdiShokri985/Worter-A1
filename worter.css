@@ -162,7 +162,7 @@
         /* هماهنگی دکمه‌های Play و Delete برای تراز بهتر */
         .item-bottom button.play-btn,
         .item-bottom button.delete-btn {
-            background-color: #c9a204; /* رنگ دکمه Play */
+            background-color: #ffd203; /* رنگ دکمه Play */
             color: #2c3e50;
             border: none;
             padding: 8px 12px;
@@ -178,7 +178,7 @@
         }
 
         .item-bottom button.delete-btn {
-            background-color: #cc594e; /* رنگ دکمه Delete */
+            background-color: #c23325; /* رنگ دکمه Delete */
             color: #ecf0f1;
         }
 

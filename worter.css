@@ -305,7 +305,7 @@
             .item-bottom button.reveal-btn,
             .item-bottom button.hide-btn {
                 width: 35px; /* اندازه کمی کوچکتر برای موبایل */
-                height: 30px;
+                height: 20px;
                 font-size: 0.9em;
                 padding: 6px;
                 border-radius: 5px;
@@ -313,7 +313,7 @@
         
             .item-bottom button.play-btn,
             .item-bottom button.delete-btn {
-                height: 30px; /* ارتفاع هماهنگ در موبایل */
+                height: 20px; /* ارتفاع هماهنگ در موبایل */
                 font-size: 0.8em;
                 padding: 6px 10px;
             }

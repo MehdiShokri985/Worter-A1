@@ -203,39 +203,53 @@
 
         /* range ------------------------- */
 
-        .item-bottom input[type="range"] {
-            width: 120px; /* عرض کمی بیشتر برای ظاهر بهتر */
-            height: 8px; /* ضخامت مسیر اسلایدر */
-            background: #34495e; /* رنگ مسیر هماهنگ با پس‌زمینه آیتم */
-            border-radius: 4px; /* گوشه‌های گرد ملایم */
+         .item-bottom input[type="range"] {
+            width: 120px; /* عرض مناسب */
+            height: 8px; /* ضخامت مسیر */
+            background: linear-gradient(to right, #00ff88 0%, #00ff88 0%, #34495e 0%, #34495e 100%); /* پس‌زمینه دو رنگ */
+            border-radius: 4px;
             cursor: pointer;
             -webkit-appearance: none;
             appearance: none;
             outline: none;
-            transition: background 0.2s ease;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2); /* سایه ملایم برای عمق */
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+
+        /* به‌روزرسانی پس‌زمینه بر اساس مقدار اسلایدر */
+        .item-bottom input[type="range"]::-webkit-slider-runnable-track {
+            height: 8px;
+            border-radius: 4px;
+            background: transparent; /* برای استفاده از linear-gradient والد */
+        }
+
+        .item-bottom input[type="range"]::-moz-range-track {
+            height: 8px;
+            border-radius: 4px;
+            background: transparent;
         }
 
         .item-bottom input[type="range"]::-webkit-slider-thumb {
             -webkit-appearance: none;
             appearance: none;
-            width: 18px; /* اندازه دستگیره */
+            width: 18px;
             height: 18px;
-            background: #00ff88; /* رنگ سبز روشن هماهنگ با تم */
-            border-radius: 50%; /* دستگیره دایره‌ای */
+            background: #00ff88;
+            border-radius: 50%;
             cursor: pointer;
-            border: 2px solid #2c3e50; /* حاشیه تیره برای کنتراست */
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); /* سایه برای برجستگی */
+            border: 2px solid #2c3e50;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
             transition: transform 0.2s ease, box-shadow 0.2s ease;
+            margin-top: -5px; /* تنظیم موقعیت عمودی برای قرار گرفتن در وسط */
         }
 
         .item-bottom input[type="range"]::-webkit-slider-thumb:hover {
-            transform: scale(1.1); /* بزرگ شدن دستگیره هنگام هاور */
-            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.4); /* سایه قوی‌تر */
+            transform: scale(1.1);
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.4);
         }
 
         .item-bottom input[type="range"]::-moz-range-thumb {
-            width: 14px; /* اندازه کمی کوچکتر برای فایرفاکس */
+            width: 14px;
             height: 14px;
             background: #00ff88;
             border-radius: 50%;
@@ -248,18 +262,6 @@
         .item-bottom input[type="range"]::-moz-range-thumb:hover {
             transform: scale(1.1);
             box-shadow: 0 3px 6px rgba(0, 0, 0, 0.4);
-        }
-
-        .item-bottom input[type="range"]::-webkit-slider-runnable-track {
-            background: #34495e;
-            height: 8px;
-            border-radius: 4px;
-        }
-
-        .item-bottom input[type="range"]::-moz-range-track {
-            background: #34495e;
-            height: 8px;
-            border-radius: 4px;
         }
 
 

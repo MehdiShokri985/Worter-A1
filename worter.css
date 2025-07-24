@@ -9,9 +9,17 @@
 
         h1 {
             text-align: center;
-            color: #5b87b8;
+            color: #f1c40f; /* رنگ زرد */
             font-size: 1.2em;
-            margin-bottom: 20px;
+            background: #1a252f; /* پس‌زمینه سورمه‌ای */
+            padding: 15px 0;
+            width: 100%;
+            margin: 0 auto 20px auto;
+            border-bottom: 3px solid #f1c40f; /* خط زیرین زرد */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); /* سایه ملایم */
+            display: block;
+            max-width: 800px;
+            font-weight: 100;
         }
 
         .container {

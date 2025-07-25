@@ -18,8 +18,8 @@
             border-bottom: 3px solid #f1c40f; /* خط زیرین زرد */
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); /* سایه ملایم */
             display: block;
-             max-width: 800px;
-             font-weight: 100;
+            max-width: 800px;
+            font-weight: 100;
         }
 
         .container {
@@ -59,7 +59,6 @@
             .item-bottom button.delete-btn:hover {
                 background-color: #c0392b;
             }
-
         }
 
         .accordion-content {
@@ -103,6 +102,7 @@
             display: flex;
             flex-direction: column;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            position: relative; /* برای موقعیت‌دهی آیکون ریشه */
         }
 
         .item-top {
@@ -133,10 +133,22 @@
 
         .item-bottom .sound {
             font-size: 1.2em;
-            color: #9bff94;
+            color: #9bff94; /* Default green for Sound_de */
             cursor: pointer;
             margin-bottom: 10px;
         }
+
+        /* New color classes for Sound_de */
+        .item-bottom .sound.pink-text {
+            color: #ff69b4; /* Beautiful Pink */
+        }
+        .item-bottom .sound.blue-text {
+            color: #6495ed; /* Beautiful Blue */
+        }
+        .item-bottom .sound.green-text {
+            color: #3cb371; /* Beautiful Green */
+        }
+
 
         .item-bottom .sound span {
             filter: blur(5px);
@@ -203,7 +215,7 @@
 
         /* range ------------------------- */
 
-         .item-bottom input[type="range"] {
+        .item-bottom input[type="range"] {
             width: 120px; /* عرض مناسب */
             height: 8px; /* ضخامت مسیر */
             background: linear-gradient(to right, #00ff88 0%, #00ff88 0%, #34495e 0%, #34495e 100%); /* پس‌زمینه دو رنگ */
@@ -304,6 +316,114 @@
             opacity: 0.6;
         }
 
+        /* Root Icon (i) Styles */
+        .root-icon {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            color: #f1c40f; /* Yellow color for the icon */
+            font-size: 1.2em;
+            cursor: pointer;
+            z-index: 5;
+            padding: 5px;
+            border-radius: 50%; /* Make it round */
+            background-color: rgba(241, 196, 15, 0.1); /* Subtle background */
+            transition: background-color 0.2s ease;
+            width: 20px; /* Fixed width and height for a perfect circle */
+            height: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+        }
+
+        .root-icon:hover {
+            background-color: rgba(241, 196, 15, 0.3); /* Darker background on hover */
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1000; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgba(0, 0, 0, 0.7); /* Black w/ opacity */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none; /* Allows clicks to pass through when hidden */
+        }
+
+        .modal.show {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-content {
+            background-color: rgba(44, 62, 80, 0.5); /* More transparent: 0.5 */
+            margin: auto;
+            padding: 30px;
+            border: 1px solid #f1c40f; /* Yellow border */
+            border-radius: 10px;
+            width: 80%; /* Default width */
+            max-width: 500px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            animation: fadeInScale 0.3s ease-out forwards; /* Animation for appearance */
+            color: #ecf0f1; /* Light text color */
+            direction: ltr; /* Content direction LTR */
+            font-size: 1.1em;
+            position: relative; /* For close button positioning */
+            text-align: left; /* Align text to left for LTR */
+        }
+
+        @keyframes fadeInScale {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .modal-content.hide {
+            animation: fadeOutScale 0.3s ease-in forwards; /* Animation for disappearance */
+        }
+
+        @keyframes fadeOutScale {
+            from {
+                opacity: 1;
+                transform: scale(1);
+            }
+            to {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+        }
+
+        .close-button {
+            color: #f1c40f; /* Yellow close button */
+            position: absolute;
+            top: 10px;
+            right: 15px; /* Stay right for LTR content */
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.2s ease;
+        }
+
+        .close-button:hover,
+        .close-button:focus {
+            color: #e67e22; /* Orange on hover/focus */
+            text-decoration: none;
+        }
 
 
         @media (max-width: 600px) {
@@ -314,11 +434,10 @@
                 text-align: center;
             }
 
-             .item {
-         
-            padding: 20px 20px 5px 20px;
-            margin-bottom: 10px;
-             }
+            .item {
+                padding: 20px 20px 5px 20px;
+                margin-bottom: 10px;
+            }
 
             .item-top {
                 flex-direction: column;
@@ -334,9 +453,7 @@
             .item-bottom button {
                 margin: 10px 0;
             }
-
-           
-
+            
             .item-bottom input[type="range"] {
                 width: 120px;
                 height: 6px;
@@ -353,15 +470,34 @@
                 width: 12px;
                 height: 12px;
             }
-        }
 
-                        /* استایل برای نسخه موبایل */
+            .root-icon {
+                top: 5px;
+                left: 5px;
+                font-size: 1em;
+                width: 18px;
+                height: 18px;
+            }
+
+            .modal-content {
+                width: 75%; /* Slightly narrower on mobile: 75% */
+                padding: 20px;
+                font-size: 1em;
+            }
+
+            .close-button {
+                font-size: 24px;
+                top: 5px;
+                right: 10px;
+            }
+        }
+        
+        /* استایل برای نسخه موبایل */
         @media (max-width: 600px) {
             .item-bottom .control-buttons {
                 gap: 5px; /* فاصله کمتر در موبایل */
             }
 
-        
             .item-bottom button.play-btn,
             .item-bottom button.delete-btn {
                 height: 20px; /* ارتفاع هماهنگ در موبایل */

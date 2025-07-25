@@ -1,33 +1,56 @@
 const container = document.querySelector(".container");
+const rootModal = document.getElementById("rootModal");
+const modalRootContent = document.getElementById("modalRootContent");
+const closeButton = document.querySelector(".close-button");
 
 function createItem(item) {
-  const isSentence = /[.!?]$/.test(item.Sound_de);
+  // Check if it's a sentence (ends with ., ?, !)
+  const isSentence = /[.!?]$/.test(item.Sound_de.trim());
+
+  let soundContent = "";
+  let maxSliderValue;
+  let segments;
+  if (isSentence) {
+    segments = item.Sound_de.split(" ");
+    soundContent = segments.map((word) => `<span>${word}</span>`).join(" ");
+    maxSliderValue = segments.length;
+  } else {
+    segments = item.Sound_de.split("");
+    soundContent = segments.map((char) => `<span>${char}</span>`).join("");
+    maxSliderValue = segments.length;
+  }
+
+  // Determine the color class based on the article
+  let colorClass = "";
+  // Only apply color if it's not a sentence and starts with a specific article
+  if (!isSentence) {
+    const lowerCaseSoundDe = item.Sound_de.toLowerCase().trim();
+    if (lowerCaseSoundDe.startsWith("die ")) {
+      colorClass = "pink-text";
+    } else if (lowerCaseSoundDe.startsWith("der ")) {
+      colorClass = "blue-text";
+    } else if (lowerCaseSoundDe.startsWith("das ")) {
+      colorClass = "green-text";
+    }
+  }
+
+  // Add root icon if root exists
+  let rootIconHtml = "";
+  if (item.root && item.root.trim() !== "") {
+    rootIconHtml = `<div class="root-icon" data-root-content="${item.root}">i</div>`;
+  }
+
   const itemDiv = document.createElement("div");
   itemDiv.classList.add("item");
-
-
-   let soundContent = '';
-    let maxSliderValue;
-    let segments;
-    if (isSentence) {
-        segments = item.Sound_de.split(' ');
-        soundContent = segments.map(word => `<span>${word}</span>`).join(' ');
-        maxSliderValue = segments.length;
-    } else {
-        segments = item.Sound_de.split('');
-        soundContent = segments.map(char => `<span>${char}</span>`).join('');
-        maxSliderValue = segments.length;
-    }
-
   itemDiv.innerHTML = `
                 <div class="item-top">
                     <div class="filename">${item.Filename}</div>
                     <div class="translate">${item.translate_fa}</div>
                 </div>
-                <div class="item-bottom">
+                ${rootIconHtml} <div class="item-bottom">
                     <div class="sound ${
                       isSentence ? "sentence" : ""
-                    }">${soundContent}</div>
+                    } ${colorClass}">${soundContent}</div>
                     <input type="text" class="input-text" placeholder="Testen Sie Ihr Schreiben.">
                     <audio src="audio/${item.file}" preload="none"></audio>
                     <button class="play-btn">Play Sound</button>
@@ -40,7 +63,6 @@ function createItem(item) {
 
   // Initialize reveal/hide indices
   itemDiv.dataset.revealIndex = "0";
-//   itemDiv.dataset.hideIndex = "0";
 
   // Add event listener for play button
   const playButton = itemDiv.querySelector(".play-btn");
@@ -58,33 +80,32 @@ function createItem(item) {
   // Add event listener for revealing/hiding sound text on click
   const soundText = itemDiv.querySelector(".sound");
 
-  soundText.addEventListener('click', () => {
-                const spans = soundText.querySelectorAll('span');
-                const allRevealed = Array.from(spans).every(span => span.classList.contains('revealed'));
-                spans.forEach(span => {
-                    span.classList.toggle('revealed', !allRevealed);
-                });
-                itemDiv.dataset.revealIndex = allRevealed ? '0' : spans.length;
-                const slider = itemDiv.querySelector('.reveal-slider');
-                slider.value = allRevealed ? 0 : spans.length;
-                const percentage = (slider.value / maxSliderValue) * 100;
-                slider.style.background = `linear-gradient(to right, #00ff88 ${percentage}%, #34495e ${percentage}%)`;
-            });
+  soundText.addEventListener("click", () => {
+    const spans = soundText.querySelectorAll("span");
+    const allRevealed = Array.from(spans).every((span) =>
+      span.classList.contains("revealed")
+    );
+    spans.forEach((span) => {
+      span.classList.toggle("revealed", !allRevealed);
+    });
+    itemDiv.dataset.revealIndex = allRevealed ? "0" : spans.length;
+    const slider = itemDiv.querySelector(".reveal-slider");
+    slider.value = allRevealed ? 0 : spans.length;
+    const percentage = (slider.value / maxSliderValue) * 100;
+    slider.style.background = `linear-gradient(to right, #00ff88 ${percentage}%, #34495e ${percentage}%)`;
+  });
 
-
-    const slider = itemDiv.querySelector('.reveal-slider');
-            slider.addEventListener('input', () => {
-                const revealIndex = parseInt(slider.value);
-                const spans = soundText.querySelectorAll('span');
-                spans.forEach((span, index) => {
-                    span.classList.toggle('revealed', index < revealIndex);
-                });
-                itemDiv.dataset.revealIndex = revealIndex;
-                const percentage = (revealIndex / maxSliderValue) * 100;
-                slider.style.background = `linear-gradient(to right, #00ff88 ${percentage}%, #34495e ${percentage}%)`;
-            });
-
-
+  const slider = itemDiv.querySelector(".reveal-slider");
+  slider.addEventListener("input", () => {
+    const revealIndex = parseInt(slider.value);
+    const spans = soundText.querySelectorAll("span");
+    spans.forEach((span, index) => {
+      span.classList.toggle("revealed", index < revealIndex);
+    });
+    itemDiv.dataset.revealIndex = revealIndex;
+    const percentage = (revealIndex / maxSliderValue) * 100;
+    slider.style.background = `linear-gradient(to right, #00ff88 ${percentage}%, #34495e ${percentage}%)`;
+  });
 
   // Add event listener for input text
   const inputText = itemDiv.querySelector(".input-text");
@@ -95,6 +116,15 @@ function createItem(item) {
       inputText.classList.remove("correct");
     }
   });
+
+  // Add event listener for the root icon to open modal
+  const rootIcon = itemDiv.querySelector(".root-icon");
+  if (rootIcon) {
+    rootIcon.addEventListener("click", () => {
+      modalRootContent.textContent = rootIcon.dataset.rootContent;
+      rootModal.classList.add("show");
+    });
+  }
 
   return itemDiv;
 }
@@ -114,9 +144,9 @@ function renderItems(items) {
     const accordionHeader = document.createElement("div");
     accordionHeader.classList.add("accordion-header");
     accordionHeader.innerHTML = `
-                    <span>Gruppe ${i + 1} (${start + 1} - ${end})</span>
-                    <button class="toggle-textbox-btn" disabled>Text ein</button>
-                `;
+                        <span>Gruppe ${i + 1} (${start + 1} - ${end})</span>
+                        <button class="toggle-textbox-btn" disabled>Text ein</button>
+                    `;
 
     const accordionContent = document.createElement("div");
     accordionContent.classList.add("accordion-content");
@@ -195,7 +225,74 @@ function renderItems(items) {
   }
 }
 
-// Fetch data from json-worter.json
+// Event listener to close the modal
+closeButton.addEventListener("click", () => {
+  rootModal.classList.remove("show");
+});
+
+// Close modal when clicking outside of the content
+rootModal.addEventListener("click", (e) => {
+  if (e.target === rootModal) {
+    rootModal.classList.remove("show");
+  }
+});
+
+// // Fetch data from json-worter.json (using the provided test data)
+// const testData = [
+//     {
+//         "Filename": "1603",
+//         "Sound_de": "die Vorsicht",
+//         "translate_fa": "احتیاط",
+//         "file": "1603_de.mp3",
+//         "root": "vor (قبل) + sicht (دید، نگاه)"
+//     },
+//     {
+//         "Filename": "1604",
+//         "Sound_de": "Vorsicht! Da kommt ein Auto.",
+//         "translate_fa": "احتیاط! یک ماشین می‌آید.",
+//         "file": "1604_de.mp3",
+//         "root": ""
+//     },
+//     {
+//         "Filename": "1605",
+//         "Sound_de": "(sich) vorstellen",
+//         "translate_fa": "معرفی کردن (خود)",
+//         "file": "1605_de.mp3",
+//         "root": "vor (قبل) + stellen (قرار دادن)"
+//     },
+//     {
+//         "Filename": "1606",
+//         "Sound_de": "Wir wollen uns kennenlernen. Können Sie sich bitte vorstellen?",
+//         "translate_fa": "ما می‌خواهیم با هم آشنا شویم. لطفاً خودتان را معرفی کنید.",
+//         "file": "1606_de.mp3",
+//         "root": ""
+//     },
+//     {
+//         "Filename": "1607",
+//         "Sound_de": "das Vorwahl",
+//         "translate_fa": "کد منطقه",
+//         "file": "1607_de.mp3",
+//         "root": "vor (قبل) + wählen (انتخاب کردن، شماره‌گیری)"
+//     },
+//     {
+//         "Filename": "1608",
+//         "Sound_de": "Wie ist die Vorwahl von München?",
+//         "translate_fa": "کد منطقه مونیخ چیست؟",
+//         "file": "1608_de.mp3",
+//         "root": ""
+//     },
+//     {
+//         "Filename": "1609",
+//         "Sound_de": "der wandern",
+//         "translate_fa": "پیاده‌روی کردن",
+//         "file": "1609_de.mp3",
+//         "root": ""
+//     }
+// ];
+// renderItems(testData); // Use testData directly for demonstration
+
+// In a real scenario, uncomment the fetch call and remove the testData usage:
+
 fetch("json-worter.json")
   .then((response) => {
     if (!response.ok) {

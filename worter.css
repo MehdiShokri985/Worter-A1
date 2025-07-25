@@ -133,7 +133,7 @@
 
         .item-bottom .sound {
             font-size: 1.2em;
-            color: #9bff94; /* Default green for Sound_de */
+            color: #93d2ff; /* Default green for Sound_de */
             cursor: pointer;
             margin-bottom: 10px;
         }
@@ -146,7 +146,7 @@
             color: #6495ed; /* Beautiful Blue */
         }
         .item-bottom .sound.green-text {
-            color: #3cb371; /* Beautiful Green */
+            color: #07c84a; /* Beautiful Green */
         }
 
 
@@ -161,7 +161,7 @@
 
         .item-bottom .sentence {
             font-style: italic;
-            color: #3498db;
+            color: #ffae00;
         }
 
         .item-bottom audio {
@@ -366,7 +366,7 @@
         }
 
         .modal-content {
-            background-color: rgba(44, 62, 80, 0.5); /* More transparent: 0.5 */
+            background-color: rgba(44, 62, 80, 0.8); /* More transparent: 0.5 */
             margin: auto;
             padding: 30px;
             border: 1px solid #f1c40f; /* Yellow border */
@@ -472,8 +472,8 @@
             }
 
             .root-icon {
-                top: 5px;
-                left: 5px;
+                /* top: 5px;
+                left: 5px; */
                 font-size: 1em;
                 width: 18px;
                 height: 18px;

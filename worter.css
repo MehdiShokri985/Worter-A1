@@ -97,7 +97,7 @@
         .item {
             background-color: #34495e;
             border-radius: 10px;
-            padding: 20px;
+            padding: 15px 15px 17px 15px;
             margin-bottom: 10px;
             display: flex;
             flex-direction: column;
@@ -113,17 +113,31 @@
         }
 
         .item-top .filename {
-            font-size: 1.1em;
-            font-weight: bold;
-            color: #03152f;
-            margin-bottom: 10px;
+               /* font-size: 0.9em; */
+            font-weight: normal;
+            /* color: #333333; */
+            margin-bottom: 5px;
+            background-color: #7b810a29;
+            padding: 3px 6px;
+            border-radius: 5px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            display: inline-block;
+            min-width: auto;
+            text-align: center;
+            letter-spacing: normal;
+            text-transform: none;
+            color: #dbde13;
         }
 
         .item-top .translate {
-            font-size: 1.2em;
-            color: #ecf0f1;
+              font-size: 1.2em; 
+                color: #c5fff7; 
+                margin-top: 5px; 
+                display: block;
+                margin-right: 10px;
         }
 
+        
         .item-bottom {
             margin-top: 20px;
             text-align: left;

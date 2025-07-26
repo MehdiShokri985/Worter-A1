@@ -139,7 +139,7 @@
 
         
         .item-bottom {
-            margin-top: 20px;
+            margin-top: 15px;
             text-align: left;
             direction: ltr;
             position: relative;
@@ -149,7 +149,7 @@
             font-size: 1.2em;
             color: #93d2ff; /* Default green for Sound_de */
             cursor: pointer;
-            margin-bottom: 10px;
+            margin-bottom: 25px;
         }
 
         /* New color classes for Sound_de */

@@ -91,7 +91,7 @@ function createItem(item) {
     itemDiv.dataset.revealIndex = allRevealed ? "0" : spans.length;
     const slider = itemDiv.querySelector(".reveal-slider");
     slider.value = allRevealed ? 0 : spans.length;
-    const percentage = (slider.value / maxSliderValue) * 100;
+    const percentage = (slider.value / maxSliderValue) * 50;
     slider.style.background = `linear-gradient(to right, #00ff88 ${percentage}%, #34495e ${percentage}%)`;
   });
 
@@ -103,7 +103,7 @@ function createItem(item) {
       span.classList.toggle("revealed", index < revealIndex);
     });
     itemDiv.dataset.revealIndex = revealIndex;
-    const percentage = (revealIndex / maxSliderValue) * 100;
+    const percentage = (revealIndex / maxSliderValue) * 50;
     slider.style.background = `linear-gradient(to right, #00ff88 ${percentage}%, #34495e ${percentage}%)`;
   });
 
@@ -131,7 +131,7 @@ function createItem(item) {
 
 function renderItems(items) {
   container.innerHTML = "";
-  const groupSize = 100;
+  const groupSize = 50;
   const groups = Math.ceil(items.length / groupSize);
 
   for (let i = 0; i < groups; i++) {

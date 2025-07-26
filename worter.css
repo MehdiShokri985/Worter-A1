@@ -219,7 +219,7 @@
 
         .item-bottom .control-buttons {
             position: absolute;
-            bottom: 0px;
+            bottom: 5px;
             right: 5px;
             display: flex;
             gap: 8px; /* فاصله بین دکمه‌ها */
@@ -510,6 +510,7 @@
         @media (max-width: 600px) {
             .item-bottom .control-buttons {
                 gap: 5px; /* فاصله کمتر در موبایل */
+                 bottom: 0px;
             }
 
             .item-bottom button.play-btn,

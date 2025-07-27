@@ -2014,12 +2014,12 @@
     "file": "288_de.mp3",
     "root": ""
   },
-  {
+    {
     "Filename": "289",
-    "Sound_de": "der Anruf",
-    "translate_fa": "تماس",
+    "Sound_de": "der Anrufbeantworter",
+    "translate_fa": "دستگاه پاسخگو",
     "file": "289_de.mp3",
-    "root": "an (به) + Ruf (صدا)"
+    "root": "Anruf (تماس تلفنی) + beantworten (پاسخ دادن) + er (ابزار)"
   },
   {
     "Filename": "290",

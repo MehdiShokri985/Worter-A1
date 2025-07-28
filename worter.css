@@ -226,6 +226,12 @@
             align-items: center; /* تراز عمودی */
         }
 
+        /* استایل اسلایدر */
+        .item-bottom .slider-container {
+            position: absolute;
+            bottom: 5px;
+            right: 5px; /* اسلایدر در سمت راست */
+        }
 
         /* range ------------------------- */
 
@@ -439,23 +445,24 @@
             text-decoration: none;
         }
 
-    .accordion-header .test-btn {
-            background-color: #e74c3c;
-            color: #fff;
-            border: none;
-            padding: 5px 10px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 0.9em;
-            height: 20px;
-            display: inline-flex;
-            align-items: center;
-            margin-left: 10px;
-        }
+     /* استایل دکمه تست */
+.accordion-header .test-btn {
+    background-color: #e74c3c;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9em;
+    height: 20px;
+    display: inline-flex;
+    align-items: center;
+    margin-left: 10px;
+}
 
-        .accordion-header .test-btn:hover {
-            background-color: #c0392b;
-        }
+.accordion-header .test-btn:hover {
+    background-color: #c0392b;
+}
 
         @media (max-width: 600px) {
             .accordion-header .toggle-textbox-btn {

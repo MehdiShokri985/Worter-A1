@@ -3,12 +3,13 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+     <link rel="stylesheet" href="https://cdn.fontcdn.ir/Font/Persian/Vazir/Vazir.css">
     <title>Worttest</title>
     <style>
       body {
         background-color: #2c3e50;
         color: #f4d03f;
-        font-family: Arial, sans-serif;
+        font-family: 'Vazir', Arial, sans-serif;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -20,30 +21,30 @@
       .container {
         max-width: 800px;
         width: 100%;
-        padding: 20px;
+        padding: 10px;
         background-color: #1a2b44;
         border-radius: 10px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
       }
       .score {
         font-size: 1.5em;
-        margin-bottom: 20px;
+        margin-bottom: 5px;
         text-align: center;
       }
       .timer {
         font-size: 1.5em;
-        margin-bottom: 20px;
+        margin-bottom: 10px;
         text-align: center;
       }
       .back-button {
         background-color: #f4d03f;
         color: #2c3e50;
         border: none;
-        padding: 10px 20px;
+        padding: 2px 15px;
         border-radius: 5px;
         cursor: pointer;
         margin-bottom: 20px;
-        font-size: 1em;
+        font-size: 0.8em;
       }
       .back-button:hover {
         background-color: #d4b32f;
@@ -83,6 +84,7 @@
         cursor: pointer;
         transition: background-color 0.3s;
         user-select: none;
+        color:#000f2f;
       }
       .item:hover {
         background-color: #f4d03f;
@@ -162,16 +164,16 @@
   </head>
   <body>
     <div class="container">
-      <button class="back-button" onclick="window.location.href='index.html'">بازگشت</button>
+      <button class="back-button" onclick="window.location.href='index.html'">Zurück zur Startseite</button>
       <div class="score">Punktzahl: <span id="score">0</span></div>
-      <div class="timer">زمان باقی‌مانده: <span id="timer">180</span> ثانیه</div>
+      <div class="timer">Verbleibende Zeit: <span id="timer">180</span> Sekunden</div>
       <div class="columns">
         <div class="column" id="german-column"></div>
         <div class="column" id="persian-column"></div>
       </div>
     </div>
     <div class="popup" id="result-popup">
-      <h2>نتیجه بازی</h2>
+      <h2>Ergebnis</h2>
       <p>مجموع امتیازات: <span id="total-score"></span></p>
       <p>امتیازات کسب‌شده: <span id="earned-score"></span></p>
       <button onclick="restartGame()">Neustart</button>

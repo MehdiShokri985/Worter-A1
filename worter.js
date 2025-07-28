@@ -129,234 +129,103 @@ function createItem(item) {
   return itemDiv;
 }
 
-// function renderItems(items) {
-//   container.innerHTML = "";
-//   const groupSize = 50;
-//   const groups = Math.ceil(items.length / groupSize);
-
-//   for (let i = 0; i < groups; i++) {
-//     const start = i * groupSize;
-//     const end = Math.min(start + groupSize, items.length);
-
-//     const accordionDiv = document.createElement("div");
-//     accordionDiv.classList.add("accordion");
-
-//     const accordionHeader = document.createElement("div");
-//     accordionHeader.classList.add("accordion-header");
-//     accordionHeader.innerHTML = `
-//                         <span>Gruppe ${i + 1} (${start + 1} - ${end})</span>
-//                         <button class="toggle-textbox-btn" disabled>Text ein</button>
-//                     `;
-
-//     const accordionContent = document.createElement("div");
-//     accordionContent.classList.add("accordion-content");
-//     accordionContent.dataset.groupIndex = i; // Store group index for reference
-
-//     accordionDiv.appendChild(accordionHeader);
-//     accordionDiv.appendChild(accordionContent);
-//     container.appendChild(accordionDiv);
-
-//     accordionHeader.addEventListener("click", (e) => {
-//       if (
-//         e.target.classList.contains("toggle-textbox-btn") ||
-//         e.target.closest(".toggle-textbox-btn")
-//       ) {
-//         return;
-//       }
-//       const isActive = accordionContent.classList.contains("active");
-
-//       // Close all other accordions
-//       document.querySelectorAll(".accordion-content").forEach((content) => {
-//         if (
-//           content !== accordionContent &&
-//           content.classList.contains("active")
-//         ) {
-//           content.classList.remove("active");
-//           content.innerHTML = ""; // Clear content of other accordions
-//           const otherHeader = content.previousElementSibling;
-//           const otherToggleButton = otherHeader.querySelector(
-//             ".toggle-textbox-btn"
-//           );
-//           otherToggleButton.disabled = true; // Disable button for closed accordions
-//           otherToggleButton.textContent = "Text ein"; // Reset button text
-//         }
-//       });
-
-//       // Toggle the clicked accordion
-//       accordionContent.classList.toggle("active");
-//       const toggleTextboxButton = accordionHeader.querySelector(
-//         ".toggle-textbox-btn"
-//       );
-//       toggleTextboxButton.disabled =
-//         !accordionContent.classList.contains("active"); // Enable/disable button based on accordion state
-
-//       if (isActive) {
-//         // Clear content when closing
-//         accordionContent.innerHTML = "";
-//         toggleTextboxButton.textContent = "Text ein";
-//       } else {
-//         // Create items when opening
-//         const groupIndex = parseInt(accordionContent.dataset.groupIndex);
-//         const groupStart = groupIndex * groupSize;
-//         const groupEnd = Math.min(groupStart + groupSize, items.length);
-//         const currentGroupItems = items.slice(groupStart, groupEnd);
-
-//         currentGroupItems.forEach((item) => {
-//           const itemDiv = createItem(item);
-//           accordionContent.appendChild(itemDiv);
-//         });
-//       }
-//     });
-
-//     const toggleTextboxButton = accordionHeader.querySelector(
-//       ".toggle-textbox-btn"
-//     );
-//     toggleTextboxButton.addEventListener("click", (e) => {
-//       e.stopPropagation();
-//       const textboxes = accordionContent.querySelectorAll(".input-text");
-//       const isHidden =
-//         textboxes[0]?.style.display === "none" ||
-//         textboxes[0]?.style.display === "";
-//       textboxes.forEach((textbox) => {
-//         textbox.style.display = isHidden ? "block" : "none";
-//       });
-//       toggleTextboxButton.textContent = isHidden ? "Text aus" : "Text ein";
-//     });
-//   }
-// }
-
-// Event listener to close the modal
-
-// ... (بقیه کد همان است تا بخش renderItems)
-
 function renderItems(items) {
-    container.innerHTML = "";
-    const groupedItems = groupItems(items);
-    const groupSize = 50;
-    const groups = Math.ceil(items.length / groupSize);
+  container.innerHTML = "";
+  const groupSize = 50;
+  const groups = Math.ceil(items.length / groupSize);
 
-    for (let i = 0; i < groups; i++) {
-        const start = i * groupSize;
-        const end = Math.min(start + groupSize, items.length);
+  for (let i = 0; i < groups; i++) {
+    const start = i * groupSize;
+    const end = Math.min(start + groupSize, items.length);
 
-        const accordionDiv = document.createElement("div");
-        accordionDiv.classList.add("accordion");
+    const accordionDiv = document.createElement("div");
+    accordionDiv.classList.add("accordion");
 
-        const accordionHeader = document.createElement("div");
-        accordionHeader.classList.add("accordion-header");
-        accordionHeader.innerHTML = `
-            <span>Gruppe ${i + 1} (${start + 1} - ${end})</span>
-            <button class="toggle-textbox-btn" disabled>Text ein</button>
-            <button class="test-btn">تست</button> <!-- دکمه جدید تست -->
-        `;
+    const accordionHeader = document.createElement("div");
+    accordionHeader.classList.add("accordion-header");
+    accordionHeader.innerHTML = `
+                        <span>Gruppe ${i + 1} (${start + 1} - ${end})</span>
+                        <button class="toggle-textbox-btn" disabled>Text ein</button>
+                    `;
 
-        const accordionContent = document.createElement("div");
-        accordionContent.classList.add("accordion-content");
-        accordionContent.dataset.groupIndex = i;
+    const accordionContent = document.createElement("div");
+    accordionContent.classList.add("accordion-content");
+    accordionContent.dataset.groupIndex = i; // Store group index for reference
 
-        accordionDiv.appendChild(accordionHeader);
-        accordionDiv.appendChild(accordionContent);
-        container.appendChild(accordionDiv);
+    accordionDiv.appendChild(accordionHeader);
+    accordionDiv.appendChild(accordionContent);
+    container.appendChild(accordionDiv);
 
-        accordionHeader.addEventListener("click", (e) => {
-            if (
-                e.target.classList.contains("toggle-textbox-btn") ||
-                e.target.closest(".toggle-textbox-btn") ||
-                e.target.classList.contains("test-btn") ||
-                e.target.closest(".test-btn")
-            ) {
-                return;
-            }
-            const isActive = accordionContent.classList.contains("active");
+    accordionHeader.addEventListener("click", (e) => {
+      if (
+        e.target.classList.contains("toggle-textbox-btn") ||
+        e.target.closest(".toggle-textbox-btn")
+      ) {
+        return;
+      }
+      const isActive = accordionContent.classList.contains("active");
 
-            // بستن سایر آکاردئون‌ها
-            document.querySelectorAll(".accordion-content").forEach((content) => {
-                if (
-                    content !== accordionContent &&
-                    content.classList.contains("active")
-                ) {
-                    content.classList.remove("active");
-                    content.innerHTML = "";
-                    const otherHeader = content.previousElementSibling;
-                    const otherToggleButton = otherHeader.querySelector(
-                        ".toggle-textbox-btn"
-                    );
-                    otherToggleButton.disabled = true;
-                    otherToggleButton.textContent = "Text ein";
-                }
-            });
-
-            // باز و بسته کردن آکاردئون کلیک‌شده
-            accordionContent.classList.toggle("active");
-            const toggleTextboxButton = accordionHeader.querySelector(
-                ".toggle-textbox-btn"
-            );
-            toggleTextboxButton.disabled =
-                !accordionContent.classList.contains("active");
-
-            if (isActive) {
-                accordionContent.innerHTML = "";
-                toggleTextboxButton.textContent = "Text ein";
-            } else {
-                const groupIndex = parseInt(accordionContent.dataset.groupIndex);
-                const groupStart = groupIndex * groupSize;
-                const groupEnd = Math.min(groupStart + groupSize, items.length);
-                const currentGroupItems = groupedItems.filter((group) =>
-                    group.some(
-                        (item) =>
-                            parseInt(item.Filename) >= groupStart + 1 &&
-                            parseInt(item.Filename) <= groupEnd
-                    )
-                );
-
-                currentGroupItems.forEach((group) => {
-                    const itemDiv = createItem(group);
-                    accordionContent.appendChild(itemDiv);
-                });
-            }
-        });
-
-        const toggleTextboxButton = accordionHeader.querySelector(
+      // Close all other accordions
+      document.querySelectorAll(".accordion-content").forEach((content) => {
+        if (
+          content !== accordionContent &&
+          content.classList.contains("active")
+        ) {
+          content.classList.remove("active");
+          content.innerHTML = ""; // Clear content of other accordions
+          const otherHeader = content.previousElementSibling;
+          const otherToggleButton = otherHeader.querySelector(
             ".toggle-textbox-btn"
-        );
-        toggleTextboxButton.addEventListener("click", (e) => {
-            e.stopPropagation();
-            const textboxes = accordionContent.querySelectorAll(".input-text");
-            const isHidden =
-                textboxes[0]?.style.display === "none" ||
-                textboxes[0]?.style.display === "";
-            textboxes.forEach((textbox) => {
-                textbox.style.display = isHidden ? "block" : "none";
-            });
-            toggleTextboxButton.textContent = isHidden ? "Text aus" : "Text ein";
-        });
+          );
+          otherToggleButton.disabled = true; // Disable button for closed accordions
+          otherToggleButton.textContent = "Text ein"; // Reset button text
+        }
+      });
 
-        // رویداد برای دکمه تست
-        const testButton = accordionHeader.querySelector(".test-btn");
-        testButton.addEventListener("click", (e) => {
-            e.stopPropagation();
-            const groupIndex = parseInt(accordionContent.dataset.groupIndex);
-            const groupStart = groupIndex * groupSize;
-            const groupEnd = Math.min(groupStart + groupSize, items.length);
-            const currentGroupItems = groupedItems.filter((group) =>
-                group.some(
-                    (item) =>
-                        parseInt(item.Filename) >= groupStart + 1 &&
-                        parseInt(item.Filename) <= groupEnd
-                )
-            );
+      // Toggle the clicked accordion
+      accordionContent.classList.toggle("active");
+      const toggleTextboxButton = accordionHeader.querySelector(
+        ".toggle-textbox-btn"
+      );
+      toggleTextboxButton.disabled =
+        !accordionContent.classList.contains("active"); // Enable/disable button based on accordion state
 
-            // جمع‌آوری تمام آیتم‌های گروه (کلمات و جملات)
-            const groupData = currentGroupItems.flat(); // فلت کردن آرایه گروه‌ها برای گرفتن همه آیتم‌ها
-            // ذخیره داده‌ها در localStorage
-            localStorage.setItem("testGroupData", JSON.stringify(groupData));
-            // هدایت به صفحه آزمون
-            window.location.href = "test.html";
+      if (isActive) {
+        // Clear content when closing
+        accordionContent.innerHTML = "";
+        toggleTextboxButton.textContent = "Text ein";
+      } else {
+        // Create items when opening
+        const groupIndex = parseInt(accordionContent.dataset.groupIndex);
+        const groupStart = groupIndex * groupSize;
+        const groupEnd = Math.min(groupStart + groupSize, items.length);
+        const currentGroupItems = items.slice(groupStart, groupEnd);
+
+        currentGroupItems.forEach((item) => {
+          const itemDiv = createItem(item);
+          accordionContent.appendChild(itemDiv);
         });
-    }
+      }
+    });
+
+    const toggleTextboxButton = accordionHeader.querySelector(
+      ".toggle-textbox-btn"
+    );
+    toggleTextboxButton.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const textboxes = accordionContent.querySelectorAll(".input-text");
+      const isHidden =
+        textboxes[0]?.style.display === "none" ||
+        textboxes[0]?.style.display === "";
+      textboxes.forEach((textbox) => {
+        textbox.style.display = isHidden ? "block" : "none";
+      });
+      toggleTextboxButton.textContent = isHidden ? "Text aus" : "Text ein";
+    });
+  }
 }
 
-// ... (بقیه کد بدون تغییر)
+// Event listener to close the modal
 closeButton.addEventListener("click", () => {
   rootModal.classList.remove("show");
 });

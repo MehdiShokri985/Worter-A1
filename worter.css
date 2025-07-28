@@ -458,6 +458,9 @@
                 text-align: center;
             }
 
+            .item-top .filename {
+              margin-right: 10px;
+            }
             .item {
                 padding: 0px 5px 5px 15px;
                 margin-bottom: 10px;

@@ -203,13 +203,6 @@ function renderItems(items) {
 
     const accordionHeader = document.createElement("div");
     accordionHeader.classList.add("accordion-header");
-    // accordionHeader.innerHTML = `
-    //         <span>Gruppe ${i + 1} (${start + 1} - ${end})</span>
-    //         <div class="header-buttons">
-    //             <button class="toggle-textbox-btn" disabled>Text ein</button>
-    //             <button class="test-btn">تست</button>
-    //         </div>
-    //     `;
 
     accordionHeader.innerHTML = `
     <span>Gruppe ${i + 1} (${start + 1} - ${end})</span>

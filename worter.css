@@ -311,7 +311,7 @@
             color: #fff;
         }
 
-        .accordion-header .toggle-textbox-btn {
+        .accordion-header .toggle-textbox-btn , .accordion-header .test-btn  {
             background-color: #00ff88;
             color: #1a252f;
             border: none;
@@ -328,6 +328,15 @@
             background-color: #cccccc;
             cursor: not-allowed;
             opacity: 0.6;
+        }
+
+        .accordion-header .test-btn {
+            background-color: #00bcd4d9;
+            margin-left: 10px;
+        }
+
+        .accordion-header .test-btn:hover {
+            background-color: #4ee0f3d9;
         }
 
         /* Root Icon (i) Styles */
@@ -439,23 +448,7 @@
             text-decoration: none;
         }
 
-    .accordion-header .test-btn {
-            background-color: #e74c3c;
-            color: #fff;
-            border: none;
-            padding: 5px 10px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 0.9em;
-            height: 20px;
-            display: inline-flex;
-            align-items: center;
-            margin-left: 10px;
-        }
-
-        .accordion-header .test-btn:hover {
-            background-color: #c0392b;
-        }
+ 
 
         @media (max-width: 600px) {
             .accordion-header .toggle-textbox-btn {

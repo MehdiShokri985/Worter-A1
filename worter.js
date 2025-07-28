@@ -214,7 +214,7 @@ function renderItems(items) {
     accordionHeader.innerHTML = `
     <span>Gruppe ${i + 1} (${start + 1} - ${end})</span>
     <div class="header-buttons">
-        <button class="test-btn">تست</button>
+        <button class="test-btn">Worttest</button>
         <button class="toggle-textbox-btn" disabled>Text ein</button>
     </div>
 `;

@@ -86,18 +86,29 @@ function createItem(group) {
 
     const itemBottom = document.createElement("div");
     itemBottom.classList.add("item-bottom");
-    itemBottom.innerHTML = `
-            <div class="sound ${isSentence ? "sentence" : ""} ${
-      isSentence ? "" : colorClass
-    }">${soundContent}</div>
-            <input type="text" class="input-text" placeholder="Testen Sie Ihr Schreiben.">
-            <audio src="audio/${item.file}" preload="none"></audio>
-            <div class="control-buttons">
-                <button class="delete-btn">Delete</button>
-                <button class="play-btn">Play Sound</button>
-                <input type="range" min="0" max="${maxSliderValue}" value="0" step="1" class="reveal-slider">
-            </div>
-        `;
+    // itemBottom.innerHTML = `
+    //         <div class="sound ${isSentence ? "sentence" : ""} ${
+    //   isSentence ? "" : colorClass
+    // }">${soundContent}</div>
+    //         <input type="text" class="input-text" placeholder="Testen Sie Ihr Schreiben.">
+    //         <audio src="audio/${item.file}" preload="none"></audio>
+    //         <div class="control-buttons">
+    //             <button class="delete-btn">Delete</button>
+    //             <button class="play-btn">Play Sound</button>
+    //             <input type="range" min="0" max="${maxSliderValue}" value="0" step="1" class="reveal-slider">
+    //         </div>
+    //     `;
+
+        itemBottom.innerHTML = `
+    <div class="sound ${isSentence ? "sentence" : ""} ${isSentence ? "" : colorClass}">${soundContent}</div>
+    <input type="text" class="input-text" placeholder="Testen Sie Ihr Schreiben.">
+    <audio src="audio/${item.file}" preload="none"></audio>
+    <div class="control-buttons">
+        <button class="play-btn">Play Sound</button>
+        <button class="delete-btn">Delete</button>
+    </div>
+    <input type="range" min="0" max="${maxSliderValue}" value="0" step="1" class="reveal-slider">
+`;
 
     itemBottom.dataset.revealIndex = "0";
 

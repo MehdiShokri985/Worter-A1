@@ -318,7 +318,7 @@
             padding: 5px 10px;
             border-radius: 5px;
             cursor: pointer;
-            font-size: 0.9em;
+            font-size: 0.8em;
             align-items: center;
             height: 20px;
             display: inline-flex;
@@ -461,6 +461,7 @@
             .item-top .filename {
               margin-right: 10px;
             }
+
             .item {
                 padding: 0px 5px 5px 15px;
                 margin-bottom: 10px;

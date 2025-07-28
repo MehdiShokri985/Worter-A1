@@ -3,7 +3,6 @@ const rootModal = document.getElementById("rootModal");
 const modalRootContent = document.getElementById("modalRootContent");
 const closeButton = document.querySelector(".close-button");
 
-// تابع groupItems را قبل از renderItems تعریف می‌کنیم
 function groupItems(items) {
     const grouped = [];
     let currentGroup = [];
@@ -12,7 +11,6 @@ function groupItems(items) {
     items.forEach((item, index) => {
         const isSentence = /[.!?]$/.test(item.Sound_de.trim());
         if (!isSentence) {
-            // اگر آیتم کلمه است، گروه قبلی را ذخیره کرده و گروه جدید شروع می‌کنیم
             if (currentGroup.length > 0) {
                 grouped.push(currentGroup);
                 currentGroup = [];
@@ -20,10 +18,8 @@ function groupItems(items) {
             currentGroup.push(item);
             lastWord = item;
         } else if (lastWord && index === parseInt(lastWord.Filename) + 1) {
-            // اگر آیتم جمله است و به کلمه قبلی مرتبط است
             currentGroup.push(item);
         } else {
-            // اگر جمله به کلمه قبلی مرتبط نیست، به‌عنوان یک آیتم مستقل رفتار می‌کنیم
             if (currentGroup.length > 0) {
                 grouped.push(currentGroup);
                 currentGroup = [];
@@ -33,7 +29,6 @@ function groupItems(items) {
         }
     });
 
-    // افزودن گروه آخر
     if (currentGroup.length > 0) {
         grouped.push(currentGroup);
     }
@@ -42,13 +37,11 @@ function groupItems(items) {
 }
 
 function createItem(group) {
-    const mainItem = group[0]; // کلمه اصلی
-    const relatedItems = group.slice(1); // جملات مرتبط
+    const mainItem = group[0];
+    const relatedItems = group.slice(1);
 
-    // بررسی اینکه آیا آیتم اصلی جمله است یا خیر
     const isMainSentence = /[.!?]$/.test(mainItem.Sound_de.trim());
 
-    // تعیین کلاس رنگ برای کلمه اصلی
     let colorClass = "";
     if (!isMainSentence) {
         const lowerCaseSoundDe = mainItem.Sound_de.toLowerCase().trim();
@@ -61,7 +54,6 @@ function createItem(group) {
         }
     }
 
-    // آیکون ریشه برای کلمه اصلی
     let rootIconHtml = "";
     if (mainItem.root && mainItem.root.trim() !== "") {
         rootIconHtml = `<div class="root-icon" data-root-content="${mainItem.root}">i</div>`;
@@ -70,7 +62,6 @@ function createItem(group) {
     const itemDiv = document.createElement("div");
     itemDiv.classList.add("item");
 
-    // بخش بالای آیتم (برای کلمه اصلی)
     itemDiv.innerHTML = `
         <div class="item-top">
             <div class="filename">${mainItem.Filename}</div>
@@ -79,7 +70,6 @@ function createItem(group) {
         ${rootIconHtml}
     `;
 
-    // ایجاد بخش‌های item-bottom برای کلمه اصلی و جملات مرتبط
     const createItemBottom = (item, isSentence) => {
         let soundContent = "";
         let maxSliderValue;
@@ -100,23 +90,26 @@ function createItem(group) {
             <div class="sound ${isSentence ? "sentence" : ""} ${isSentence ? "" : colorClass}">${soundContent}</div>
             <input type="text" class="input-text" placeholder="Testen Sie Ihr Schreiben.">
             <audio src="audio/${item.file}" preload="none"></audio>
-            <button class="play-btn">Play Sound</button>
             <div class="control-buttons">
+                <button class="delete-btn">Delete</button>
+                <button class="play-btn">Play Sound</button>
                 <input type="range" min="0" max="${maxSliderValue}" value="0" step="1" class="reveal-slider">
             </div>
         `;
 
-        // مقداردهی اولیه برای اسلایدر
         itemBottom.dataset.revealIndex = "0";
 
-        // رویداد برای دکمه پخش
         const playButton = itemBottom.querySelector(".play-btn");
         const audio = itemBottom.querySelector("audio");
         playButton.addEventListener("click", () => {
             audio.play();
         });
 
-        // رویداد برای کلیک روی متن
+        const deleteButton = itemBottom.querySelector(".delete-btn");
+        deleteButton.addEventListener("click", () => {
+            itemDiv.remove();
+        });
+
         const soundText = itemBottom.querySelector(".sound");
         soundText.addEventListener("click", () => {
             const spans = soundText.querySelectorAll("span");
@@ -133,7 +126,6 @@ function createItem(group) {
             slider.style.background = `linear-gradient(to right, #00ff88 ${percentage}%, #34495e ${percentage}%)`;
         });
 
-        // رویداد برای اسلایدر
         const slider = itemBottom.querySelector(".reveal-slider");
         slider.addEventListener("input", () => {
             const revealIndex = parseInt(slider.value);
@@ -146,7 +138,6 @@ function createItem(group) {
             slider.style.background = `linear-gradient(to right, #00ff88 ${percentage}%, #34495e ${percentage}%)`;
         });
 
-        // رویداد برای ورودی متن
         const inputText = itemBottom.querySelector(".input-text");
         inputText.addEventListener("input", () => {
             if (inputText.value.trim() === item.Sound_de) {
@@ -159,30 +150,17 @@ function createItem(group) {
         return itemBottom;
     };
 
-    // افزودن item-bottom برای کلمه اصلی
     const mainItemBottom = createItemBottom(mainItem, isMainSentence);
     itemDiv.appendChild(mainItemBottom);
 
-    // افزودن item-bottom برای جملات مرتبط
     relatedItems.forEach((relatedItem) => {
         const isRelatedSentence = /[.!?]$/.test(relatedItem.Sound_de.trim());
         const relatedItemBottom = createItemBottom(relatedItem, isRelatedSentence);
-        relatedItemBottom.querySelector(".sound").classList.add("sentence"); // همیشه جمله است
-        relatedItemBottom.querySelector(".translate")?.remove(); // حذف ترجمه اضافی اگر وجود دارد
+        relatedItemBottom.querySelector(".sound").classList.add("sentence");
+        relatedItemBottom.querySelector(".translate")?.remove();
         itemDiv.appendChild(relatedItemBottom);
     });
 
-    // دکمه حذف برای کل آیتم
-    const deleteButton = document.createElement("button");
-    deleteButton.classList.add("delete-btn");
-    deleteButton.textContent = "Delete";
-    deleteButton.addEventListener("click", () => {
-        itemDiv.remove();
-    });
-    const lastItemBottom = itemDiv.querySelector(".item-bottom:last-child .control-buttons");
-    lastItemBottom.appendChild(deleteButton);
-
-    // رویداد برای آیکون ریشه
     const rootIcon = itemDiv.querySelector(".root-icon");
     if (rootIcon) {
         rootIcon.addEventListener("click", () => {
@@ -211,8 +189,10 @@ function renderItems(items) {
         accordionHeader.classList.add("accordion-header");
         accordionHeader.innerHTML = `
             <span>Gruppe ${i + 1} (${start + 1} - ${end})</span>
-            <button class="toggle-textbox-btn" disabled>Text ein</button>
-            <button class="test-btn">تست</button>
+            <div class="header-buttons">
+                <button class="toggle-textbox-btn" disabled>Text ein</button>
+                <button class="test-btn">تست</button>
+            </div>
         `;
 
         const accordionContent = document.createElement("div");
@@ -234,7 +214,6 @@ function renderItems(items) {
             }
             const isActive = accordionContent.classList.contains("active");
 
-            // بستن سایر آکاردئون‌ها
             document.querySelectorAll(".accordion-content").forEach((content) => {
                 if (
                     content !== accordionContent &&
@@ -251,7 +230,6 @@ function renderItems(items) {
                 }
             });
 
-            // باز و بسته کردن آکاردئون کلیک‌شده
             accordionContent.classList.toggle("active");
             const toggleTextboxButton = accordionHeader.querySelector(
                 ".toggle-textbox-btn"
@@ -296,7 +274,6 @@ function renderItems(items) {
             toggleTextboxButton.textContent = isHidden ? "Text aus" : "Text ein";
         });
 
-        // رویداد برای دکمه تست
         const testButton = accordionHeader.querySelector(".test-btn");
         testButton.addEventListener("click", (e) => {
             e.stopPropagation();
@@ -311,22 +288,17 @@ function renderItems(items) {
                 )
             );
 
-            // جمع‌آوری تمام آیتم‌های گروه (کلمات و جملات)
             const groupData = currentGroupItems.flat();
-            // ذخیره داده‌ها در localStorage
             localStorage.setItem("testGroupData", JSON.stringify(groupData));
-            // هدایت به صفحه آزمون
-            window.location.href = "worttest.html"; // نام صفحه آزمون اصلاح شد
+            window.location.href = "worttest.html";
         });
     }
 }
 
-// رویداد برای بستن مودال
 closeButton.addEventListener("click", () => {
     rootModal.classList.remove("show");
 });
 
-// بستن مودال با کلیک خارج از محتوا
 rootModal.addEventListener("click", (e) => {
     if (e.target === rootModal) {
         rootModal.classList.remove("show");

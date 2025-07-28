@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>بازی یادگیری زبان آلمانی</title>
+    <style>
+      body {
+        background-color: #2c3e50;
+        color: #f4d03f;
+        font-family: Arial, sans-serif;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-height: 100vh;
+        margin: 0;
+        padding: 20px;
+        box-sizing: border-box;
+      }
+      .container {
+        max-width: 800px;
+        width: 100%;
+        padding: 20px;
+        background-color: #1a2b44;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+      }
+      .score {
+        font-size: 1.5em;
+        margin-bottom: 20px;
+        text-align: center;
+      }
+      .columns {
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+      }
+      .column {
+        width: 45%;
+        padding: 10px;
+        background-color: #34495e;
+        border-radius: 8px;
+        max-height: 60vh;
+        overflow-y: auto;
+      }
+      .column::-webkit-scrollbar {
+        width: 4px;
+      }
+      .column::-webkit-scrollbar-track {
+        background: #1a2b44;
+        border-radius: 2px;
+      }
+      .column::-webkit-scrollbar-thumb {
+        background: #f4d03f;
+        border-radius: 2px;
+      }
+      .column::-webkit-scrollbar-thumb:hover {
+        background: #d4b32f;
+      }
+      .item {
+        padding: 10px;
+        margin: 5px 0;
+        background-color: #465c71;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        user-select: none;
+      }
+      .item:hover {
+        background-color: #f4d03f;
+        color: #2c3e50;
+      }
+      .item.selected {
+        background-color: #d4b32f;
+        color: #1a2b44;
+      }
+      .item.correct {
+        background-color: #27ae60;
+        color: #fff;
+      }
+      .item.wrong {
+        background-color: #c0392b;
+        color: #fff;
+      }
+      .german {
+        direction: ltr;
+        text-align: left;
+      }
+      .persian {
+        direction: rtl;
+        text-align: right;
+      }
+      .popup {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: #34495e;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        text-align: center;
+        color: #f4d03f;
+      }
+      .popup button {
+        background-color: #f4d03f;
+        color: #2c3e50;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-top: 20px;
+      }
+      .popup button:hover {
+        background-color: #d4b32f;
+      }
+      @media (max-width: 600px) {
+        .columns {
+          flex-direction: column;
+          gap: 10px;
+        }
+        .column {
+          width: 96%;
+          max-height: 40vh;
+          overflow-y: auto;
+        }
+        .column::-webkit-scrollbar {
+          width: 4px;
+        }
+        .column::-webkit-scrollbar-track {
+          background: #1a2b44;
+          border-radius: 2px;
+        }
+        .column::-webkit-scrollbar-thumb {
+          background: #f4d03f;
+          border-radius: 2px;
+        }
+        .column::-webkit-scrollbar-thumb:hover {
+          background: #d4b32f;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="score">امتیاز: <span id="score">0</span></div>
+      <div class="columns">
+        <div class="column" id="german-column"></div>
+        <div class="column" id="persian-column"></div>
+      </div>
+    </div>
+    <div class="popup" id="result-popup">
+      <h2>نتیجه بازی</h2>
+      <p>مجموع امتیازات: <span id="total-score"></span></p>
+      <p>امتیازات کسب‌شده: <span id="earned-score"></span></p>
+      <button onclick="restartGame()">شروع مجدد</button>
+    </div>
+
+    <script>
+    //   const data = [
+    //     {
+    //       Filename: "610",
+    //       Sound_de: "die Ecke - die Ecken",
+    //       translate_fa: "گوشه",
+    //       file: "610_de.mp3",
+    //       root: "",
+    //       type: "اسم",
+    //     },
+    //     {
+    //       Filename: "611",
+    //       Sound_de: "An der nächsten Ecke links.",
+    //       translate_fa: "در گوشه بعدی به سمت چپ.",
+    //       file: "611_de.mp3",
+    //       root: "",
+    //       type: "",
+    //     },
+    //     {
+    //       Filename: "612",
+    //       Sound_de: "die Ehefrau - die Ehefrauen",
+    //       translate_fa: "همسر (خانم)",
+    //       file: "612_de.mp3",
+    //       root: "Ehe (ازدواج) + Frau (زن)",
+    //       type: "اسم",
+    //     },
+    //     {
+    //       Filename: "613",
+    //       Sound_de: "der Ehemann - die Ehemänner",
+    //       translate_fa: "همسر (آقا)",
+    //       file: "613_de.mp3",
+    //       root: "Ehe (ازدواج) + Mann (مرد)",
+    //       type: "اسم",
+    //     },
+    //     {
+    //       Filename: "614",
+    //       Sound_de: "Das ist mein (Ehe-) Mann/meine (Ehe-) Frau.",
+    //       translate_fa: "این شوهرم/زنم است.",
+    //       file: "614_de.mp3",
+    //       root: "",
+    //       type: "",
+    //     },
+    //     {
+    //       Filename: "615",
+    //       Sound_de: "das Ei - die Eier",
+    //       translate_fa: "تخم‌مرغ",
+    //       file: "615_de.mp3",
+    //       root: "",
+    //       type: "اسم",
+    //     },
+    //     {
+    //       Filename: "616",
+    //       Sound_de: "Möchtest du ein Ei zum Frühstück?",
+    //       translate_fa: "برای صبحانه تخم‌مرغ می‌خواهی؟",
+    //       file: "616_de.mp3",
+    //       root: "",
+    //       type: "",
+    //     },
+    //     {
+    //       Filename: "617",
+    //       Sound_de: "eilig",
+    //       translate_fa: "عجله",
+    //       file: "617_de.mp3",
+    //       root: "",
+    //       type: "صفت",
+    //     },
+    //     {
+    //       Filename: "618",
+    //       Sound_de: "Hast du es eilig?",
+    //       translate_fa: "عجله داری؟",
+    //       file: "618_de.mp3",
+    //       root: "",
+    //       type: "",
+    //     },
+    //     {
+    //       Filename: "619",
+    //       Sound_de: "ein",
+    //       translate_fa: "یک",
+    //       file: "619_de.mp3",
+    //       root: "",
+    //       type: "مقاله",
+    //     },
+    //     {
+    //       Filename: "620",
+    //       Sound_de: "Ich nehme ein Bier. Willst du auch eins?",
+    //       translate_fa: "یک آبجو می‌گیرم. تو هم یکی می‌خواهی؟",
+    //       file: "620_de.mp3",
+    //       root: "",
+    //       type: "",
+    //     },
+    //     {
+    //       Filename: "621",
+    //       Sound_de: "Ist hier einer, der das kann?",
+    //       translate_fa: "اینجا کسی هست که بتواند این کار را انجام دهد؟",
+    //       file: "621_de.mp3",
+    //       root: "",
+    //       type: "",
+    //     },
+    //     {
+    //       Filename: "622",
+    //       Sound_de: "einfach",
+    //       translate_fa: "ساده",
+    //       file: "622_de.mp3",
+    //       type: "صفت",
+    //     },
+    //     {
+    //       Filename: "623",
+    //       Sound_de: "Die Prüfung ist ganz einfach.",
+    //       translate_fa: "امتحان خیلی ساده است。",
+    //       file: "623_de.mp3",
+    //       root: "",
+    //       type: "",
+    //     },
+    //     {
+    //       Filename: "624",
+    //       Sound_de: "Hin und zurück? – Nein, bitte nur einfach.",
+    //       translate_fa: "رفت و برگشت؟ - خیر، لطفاً فقط رفت.",
+    //       file: "624_de.mp3",
+    //       root: "",
+    //       type: "",
+    //     },
+    //     {
+    //       Filename: "625",
+    //       Sound_de: "Ich brauche nur ein einfaches Zimmer.",
+    //       translate_fa: "من فقط یک اتاق ساده نیاز دارم。",
+    //       file: "625_de.mp3",
+    //       root: "",
+    //       type: "",
+    //     },
+    //     {
+    //       Filename: "626",
+    //       Sound_de: "der Eingang - die Eingänge",
+    //       translate_fa: "ورودی",
+    //       file: "626_de.mp3",
+    //       root: "ein (به داخل) + Gang (راه)",
+    //       type: "اسم",
+    //     },
+    //   ];
+
+      // خواندن داده‌ها از localStorage
+      const data = JSON.parse(localStorage.getItem("testGroupData")) || [];
+
+      let score = 0;
+      let selectedGerman = null;
+      let selectedPersian = null;
+      let matchedPairs = 0;
+      let lockSelection = false;
+
+      const germanColumn = document.getElementById("german-column");
+      const persianColumn = document.getElementById("persian-column");
+      const scoreDisplay = document.getElementById("score");
+      const popup = document.getElementById("result-popup");
+      const totalScoreDisplay = document.getElementById("total-score");
+      const earnedScoreDisplay = document.getElementById("earned-score");
+
+      function shuffle(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
+      }
+
+      function loadPageItems() {
+        germanColumn.innerHTML = "";
+        persianColumn.innerHTML = "";
+        const shuffledGerman = shuffle([...data]);
+        const shuffledPersian = shuffle([...data]);
+
+        shuffledGerman.forEach((item) => {
+          const div = document.createElement("div");
+          div.className = "item german";
+          div.textContent = item.Sound_de;
+          div.dataset.filename = item.Filename;
+          div.addEventListener("click", () => selectItem(div, "german"));
+          germanColumn.appendChild(div);
+        });
+
+        shuffledPersian.forEach((item) => {
+          const div = document.createElement("div");
+          div.className = "item persian";
+          div.textContent = item.translate_fa;
+          div.dataset.filename = item.Filename;
+          div.addEventListener("click", () => selectItem(div, "persian"));
+          persianColumn.appendChild(div);
+        });
+      }
+
+      function selectItem(element, type) {
+        if (lockSelection || element.classList.contains("correct")) return;
+
+        element.classList.add("selected");
+        if (type === "german") {
+          if (selectedGerman) selectedGerman.classList.remove("selected");
+          selectedGerman = element;
+        } else {
+          if (selectedPersian) selectedPersian.classList.remove("selected");
+          selectedPersian = element;
+        }
+
+        if (selectedGerman && selectedPersian) {
+          checkMatch();
+        }
+      }
+
+      function checkMatch() {
+        lockSelection = true;
+        if (
+          selectedGerman.dataset.filename === selectedPersian.dataset.filename
+        ) {
+          selectedGerman.classList.add("correct");
+          selectedPersian.classList.add("correct");
+          score++;
+          matchedPairs++;
+          scoreDisplay.textContent = score;
+          const audio = new Audio(
+            `audio/${selectedGerman.dataset.filename}_de.mp3`
+          );
+          audio.play();
+          selectedGerman = null;
+          selectedPersian = null;
+          lockSelection = false;
+          if (matchedPairs === data.length) {
+            showResult();
+          }
+        } else {
+          selectedGerman.classList.add("wrong");
+          selectedPersian.classList.add("wrong");
+          score--;
+          scoreDisplay.textContent = score;
+          const audio = new Audio("audio/falsch.mp3");
+          audio.play();
+          setTimeout(() => {
+            if (selectedGerman) selectedGerman.classList.remove("wrong");
+            if (selectedPersian) selectedPersian.classList.remove("wrong");
+            if (selectedGerman) selectedGerman.classList.remove("selected");
+            if (selectedPersian) selectedPersian.classList.remove("selected");
+            selectedGerman = null;
+            selectedPersian = null;
+            lockSelection = false;
+          }, 1000);
+        }
+      }
+
+      function showResult() {
+        totalScoreDisplay.textContent = data.length;
+        earnedScoreDisplay.textContent = score;
+        popup.style.display = "block";
+      }
+
+      function restartGame() {
+        score = 0;
+        matchedPairs = 0;
+        scoreDisplay.textContent = score;
+        popup.style.display = "none";
+        loadPageItems();
+      }
+
+      loadPageItems();
+    </script>
+  </body>
+</html>

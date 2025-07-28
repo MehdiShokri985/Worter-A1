@@ -99,8 +99,10 @@ function createItem(group) {
     //         </div>
     //     `;
 
-        itemBottom.innerHTML = `
-    <div class="sound ${isSentence ? "sentence" : ""} ${isSentence ? "" : colorClass}">${soundContent}</div>
+    itemBottom.innerHTML = `
+    <div class="sound ${isSentence ? "sentence" : ""} ${
+      isSentence ? "" : colorClass
+    }">${soundContent}</div>
     <input type="text" class="input-text" placeholder="Testen Sie Ihr Schreiben.">
     <audio src="audio/${item.file}" preload="none"></audio>
     <div class="control-buttons">
@@ -200,13 +202,21 @@ function renderItems(items) {
 
     const accordionHeader = document.createElement("div");
     accordionHeader.classList.add("accordion-header");
+    // accordionHeader.innerHTML = `
+    //         <span>Gruppe ${i + 1} (${start + 1} - ${end})</span>
+    //         <div class="header-buttons">
+    //             <button class="toggle-textbox-btn" disabled>Text ein</button>
+    //             <button class="test-btn">تست</button>
+    //         </div>
+    //     `;
+
     accordionHeader.innerHTML = `
-            <span>Gruppe ${i + 1} (${start + 1} - ${end})</span>
-            <div class="header-buttons">
-                <button class="toggle-textbox-btn" disabled>Text ein</button>
-                <button class="test-btn">تست</button>
-            </div>
-        `;
+    <span>Gruppe ${i + 1} (${start + 1} - ${end})</span>
+    <div class="header-buttons">
+        <button class="test-btn">تست</button>
+        <button class="toggle-textbox-btn" disabled>Text ein</button>
+    </div>
+`;
 
     const accordionContent = document.createElement("div");
     accordionContent.classList.add("accordion-content");

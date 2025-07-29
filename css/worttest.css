@@ -28,13 +28,14 @@
       .score, .group-index {
         font-size: 1.2em;
         text-align: center;
+        color:#00ff88;
       }
       .timer {
         font-size: 1.2em;
         margin-bottom: 10px;
         text-align: center;
       }
-      #timer, #group-index {
+      #timer, #group-index , #score {
         color: #f7f0f6;
         font-size: 1.2em;
       }

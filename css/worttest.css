@@ -18,9 +18,15 @@
         border-radius: 10px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
       }
-      .score {
+      .score-group-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+        margin-bottom: 10px;
+      }
+      .score, .group-index {
         font-size: 1.2em;
-        margin-bottom: 5px;
         text-align: center;
       }
       .timer {
@@ -28,12 +34,10 @@
         margin-bottom: 10px;
         text-align: center;
       }
-
-      #timer{
-            color: #f7f0f6;
-            font-size: 1.2em;
-        }
-      
+      #timer, #group-index {
+        color: #f7f0f6;
+        font-size: 1.2em;
+      }
       .back-button {
         background-color: #cca509;
         color: #2c3e50;
@@ -82,7 +86,7 @@
         cursor: pointer;
         transition: background-color 0.3s;
         user-select: none;
-        color:#000f2f;
+        color: #000f2f;
       }
       .item:hover {
         background-color: #f4d03f;
@@ -134,14 +138,19 @@
         background-color: #d4b32f;
       }
       @media (max-width: 600px) {
-
-         .back-button {
-                width: 100%;
-                margin-bottom: 10px;
-         }
-
-        body{
-            padding:0px 10px 0px 10px;
+        .back-button {
+          width: 100%;
+          margin-bottom: 10px;
+        }
+        body {
+          padding: 0px 10px 0px 10px;
+        }
+        .score-group-container {
+          flex-direction: row;
+          gap: 10px;
+        }
+        .score, .group-index {
+          font-size: 1em;
         }
         .columns {
           flex-direction: column;

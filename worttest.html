@@ -226,10 +226,13 @@
       function loadPageItems() {
         germanColumn.innerHTML = '';
         persianColumn.innerHTML = '';
-        const shuffledGerman = shuffle([...data]);
+
+        // مرتب‌سازی داده‌های آلمانی بر اساس Sound_de
+        const sortedGerman = [...data].sort((a, b) => a.Sound_de.localeCompare(b.Sound_de));
+        // داده‌های پارسی همچنان به‌صورت تصادفی
         const shuffledPersian = shuffle([...data]);
 
-        shuffledGerman.forEach(item => {
+        sortedGerman.forEach(item => {
           const div = document.createElement('div');
           div.className = 'item german';
           div.textContent = item.Sound_de;

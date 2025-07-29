@@ -181,7 +181,7 @@
     <div class="container">
       <button class="back-button" onclick="window.location.href='index.html'">Zurück zur Startseite</button>
       <div class="score">Punktzahl: <span id="score">0</span></div>
-      <div class="timer">Verbleibende Zeit: <span id="timer">300</span> Sekunden</div>
+      <div class="timer">Verbleibende Zeit: <span id="timer">360</span> Sekunden</div>
       <div class="columns">
         <div class="column" id="german-column"></div>
         <div class="column" id="persian-column"></div>
@@ -204,7 +204,7 @@
       let selectedPersian = null;
       let matchedPairs = 0;
       let lockSelection = false;
-      let timeLeft = 300; // 300 seconds timer
+      let timeLeft = 360; // 300 seconds timer
       let timerInterval = null;
 
       const germanColumn = document.getElementById('german-column');
@@ -314,7 +314,7 @@
       function restartGame() {
         score = 0;
         matchedPairs = 0;
-        timeLeft = 180; // Reset timer
+        timeLeft = 360; // Reset timer
         scoreDisplay.textContent = score;
         timerDisplay.textContent = timeLeft;
         popup.style.display = 'none';

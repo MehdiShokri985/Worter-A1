@@ -29,7 +29,7 @@
         // دریافت groupIndex از URL
         const urlParams = new URLSearchParams(window.location.search);
         const groupIndex = parseInt(urlParams.get("groupIndex")) || 0; // مقدار پیش‌فرض 0 در صورت عدم وجود
-        document.getElementById("group-index").textContent = groupIndex; // نمایش groupIndex
+        document.getElementById("group-index").textContent = groupIndex+1; // نمایش groupIndex
 
         germanColumn.innerHTML = "";
         persianColumn.innerHTML = "";

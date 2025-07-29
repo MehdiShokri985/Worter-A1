@@ -1,0 +1,169 @@
+      body {
+        background-color: #2c3e50;
+        color: #f4d03f;
+        font-family: 'Vazir', Arial, sans-serif;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-height: 100vh;
+        margin: 0;
+        padding: 20px;
+        box-sizing: border-box;
+      }
+      .container {
+        max-width: 800px;
+        width: 100%;
+        padding: 10px;
+        background-color: #1a2b44;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+      }
+      .score {
+        font-size: 1.2em;
+        margin-bottom: 5px;
+        text-align: center;
+      }
+      .timer {
+        font-size: 1.2em;
+        margin-bottom: 10px;
+        text-align: center;
+      }
+
+      #timer{
+            color: #f7f0f6;
+            font-size: 1.2em;
+        }
+      
+      .back-button {
+        background-color: #cca509;
+        color: #2c3e50;
+        border: none;
+        padding: 2px 15px;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-bottom: 5px;
+        font-size: 0.8em;
+      }
+      .back-button:hover {
+        background-color: #d4b32f;
+      }
+      .columns {
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+      }
+      .column {
+        width: 45%;
+        padding: 10px;
+        background-color: #34495e;
+        border-radius: 8px;
+        max-height: 60vh;
+        overflow-y: auto;
+      }
+      .column::-webkit-scrollbar {
+        width: 4px;
+      }
+      .column::-webkit-scrollbar-track {
+        background: #1a2b44;
+        border-radius: 2px;
+      }
+      .column::-webkit-scrollbar-thumb {
+        background: #f4d03f;
+        border-radius: 2px;
+      }
+      .column::-webkit-scrollbar-thumb:hover {
+        background: #d4b32f;
+      }
+      .item {
+        padding: 10px;
+        margin: 5px 0;
+        background-color: #86a9ca;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        user-select: none;
+        color:#000f2f;
+      }
+      .item:hover {
+        background-color: #f4d03f;
+        color: #2c3e50;
+      }
+      .item.selected {
+        background-color: #d4b32f;
+        color: #1a2b44;
+      }
+      .item.correct {
+        background-color: #27ae60;
+        color: #fff;
+      }
+      .item.wrong {
+        background-color: #c0392b;
+        color: #fff;
+      }
+      .german {
+        direction: ltr;
+        text-align: left;
+      }
+      .persian {
+        direction: rtl;
+        text-align: right;
+      }
+      .popup {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: #34495e;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        text-align: center;
+        color: #f4d03f;
+      }
+      .popup button {
+        background-color: #f4d03f;
+        color: #2c3e50;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-top: 20px;
+      }
+      .popup button:hover {
+        background-color: #d4b32f;
+      }
+      @media (max-width: 600px) {
+
+         .back-button {
+                width: 100%;
+                margin-bottom: 10px;
+         }
+
+        body{
+            padding:0px 10px 0px 10px;
+        }
+        .columns {
+          flex-direction: column;
+          gap: 10px;
+        }
+        .column {
+          width: 96%;
+          max-height: 40vh;
+          overflow-y: auto;
+        }
+        .column::-webkit-scrollbar {
+          width: 4px;
+        }
+        .column::-webkit-scrollbar-track {
+          background: #1a2b44;
+          border-radius: 2px;
+        }
+        .column::-webkit-scrollbar-thumb {
+          background: #f4d03f;
+          border-radius: 2px;
+        }
+        .column::-webkit-scrollbar-thumb:hover {
+          background: #d4b32f;
+        }
+      }

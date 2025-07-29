@@ -300,7 +300,7 @@ function renderItems(items) {
 
       const groupData = currentGroupItems.flat();
       localStorage.setItem("testGroupData", JSON.stringify(groupData));
-      window.location.href = "worttest.html";
+      window.location.href = `worttest.html?groupIndex=${groupIndex}`;
     });
   }
 }

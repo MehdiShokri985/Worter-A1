@@ -6,7 +6,7 @@
       let selectedPersian = null;
       let matchedPairs = 0;
       let lockSelection = false;
-      let timeLeft = 360; // 300 seconds timer
+      let timeLeft = 420; // 300 seconds timer
       let timerInterval = null;
 
       const germanColumn = document.getElementById('german-column');
@@ -116,7 +116,7 @@
       function restartGame() {
         score = 0;
         matchedPairs = 0;
-        timeLeft = 360; // Reset timer
+        timeLeft = 420; // Reset timer
         scoreDisplay.textContent = score;
         timerDisplay.textContent = timeLeft;
         popup.style.display = 'none';

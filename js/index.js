@@ -1,3 +1,5 @@
+import { all_verbs } from "./lists";
+
 const container = document.querySelector(".container");
 const rootModal = document.getElementById("rootModal");
 const modalRootContent = document.getElementById("modalRootContent");
@@ -85,7 +87,7 @@ function createItem(group) {
 
   // لیست‌های ساده برای شناسایی اجزای جمله
   const subjects = ['ich', 'du', 'er', 'sie', 'es', 'wir', 'ihr', 'Sie', 'man']; // فاعل‌ها
-  const verbs = ['bin', 'bist', 'ist', 'sind', 'habe', 'hast', 'hat', 'gehen', 'kommen']; // افعال متداول
+  const verbs = all_verbs; // افعال متداول
   const auxVerbs = ['sein', 'haben', 'werden']; // افعال کمکی
   const adverbs = ['circa', 'heute', 'morgen', 'schnell', 'hier', 'dort']; // قیدها
   const objects = ['mich', 'dich', 'ihn', 'sie', 'es', 'uns', 'euch']; // مفعول‌ها

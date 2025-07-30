@@ -1,4 +1,4 @@
-import all_verbs from "lists";
+import all_verbs from "./lists.js";
 
 const container = document.querySelector(".container");
 const rootModal = document.getElementById("rootModal");

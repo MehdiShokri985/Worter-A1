@@ -537,17 +537,19 @@
 
                /* کلاس‌های جدید برای اجزای جمله */
       .item-bottom .sound .subject {
-          color: #ffeb3b; /* زرد برای فاعل */
+          color: #6cff01; /* زرد برای فاعل */
       }
       .item-bottom .sound .verb {
           color: #36a3f4; /* قرمز برای فعل */
       }
       .item-bottom .sound .object {
-          color: #2196f3; /* آبی برای مفعول */
+          color: #ff4343; /* آبی برای مفعول */
       }
-      .item-bottom .sound .adverb {
-          color: #4caf50; /* سبز برای قید */
-      }
-      .item-bottom .sound .aux-verb {
-          color: #ff9800; /* نارنجی برای فعل کمکی */
-      }
+
+      /* .item-bottom .sound .adverb {
+          color: #4caf50; سبز برای قید */
+      /* } */
+      
+      /* .item-bottom .sound .aux-verb {
+          color: #ff9800; نارنجی برای فعل کمکی */
+      /* } */

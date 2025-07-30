@@ -534,3 +534,20 @@
                 padding: 6px 10px;
             }
         }
+
+               /* کلاس‌های جدید برای اجزای جمله */
+      .item-bottom .sound .subject {
+          color: #ffeb3b; /* زرد برای فاعل */
+      }
+      .item-bottom .sound .verb {
+          color: #f44336; /* قرمز برای فعل */
+      }
+      .item-bottom .sound .object {
+          color: #2196f3; /* آبی برای مفعول */
+      }
+      .item-bottom .sound .adverb {
+          color: #4caf50; /* سبز برای قید */
+      }
+      .item-bottom .sound .aux-verb {
+          color: #ff9800; /* نارنجی برای فعل کمکی */
+      }

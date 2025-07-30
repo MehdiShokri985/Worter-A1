@@ -75,25 +75,56 @@ function createItem(group) {
         ${rootIconHtml}
     `;
 
-  const createItemBottom = (item, isSentence) => {
-    let soundContent = "";
-    let maxSliderValue;
-    let segments;
-    // بررسی وجود item.Sound_de و رشته بودن آن
-    const soundDe = item.Sound_de && typeof item.Sound_de === 'string' ? item.Sound_de.trim() : '';
-    if (isSentence) {
-      segments = soundDe.split(" ");
-      soundContent = segments.map((word) => `<span>${word}</span>`).join(" ");
-      maxSliderValue = segments.length;
-    } else {
-      segments = soundDe.split("");
-      soundContent = segments.map((char) => `<span>${char}</span>`).join("");
-      maxSliderValue = segments.length;
-    }
+  function createItemBottom(item, isSentence) {
+  let soundContent = "";
+  let maxSliderValue;
+  let segments;
 
-    const itemBottom = document.createElement("div");
-    itemBottom.classList.add("item-bottom");
-    itemBottom.innerHTML = `
+  // بررسی وجود item.Sound_de و رشته بودن آن
+  const soundDe = item.Sound_de && typeof item.Sound_de === 'string' ? item.Sound_de.trim() : '';
+
+  // لیست‌های ساده برای شناسایی اجزای جمله
+  const subjects = ['ich', 'du', 'er', 'sie', 'es', 'wir', 'ihr', 'Sie', 'man']; // فاعل‌ها
+  const verbs = ['bin', 'bist', 'ist', 'sind', 'habe', 'hast', 'hat', 'gehen', 'kommen']; // افعال متداول
+  const auxVerbs = ['sein', 'haben', 'werden']; // افعال کمکی
+  const adverbs = ['circa', 'heute', 'morgen', 'schnell', 'hier', 'dort']; // قیدها
+  const objects = ['mich', 'dich', 'ihn', 'sie', 'es', 'uns', 'euch']; // مفعول‌ها
+
+  if (isSentence) {
+    segments = soundDe.split(" ");
+    soundContent = segments
+      .map((word, index) => {
+        let className = '';
+        const lowerWord = word.toLowerCase().replace(/[.,!?]/, '');
+
+        // شناسایی نوع کلمه
+        if (subjects.includes(lowerWord)) {
+          className = 'subject';
+        } else if (verbs.includes(lowerWord)) {
+          className = 'verb';
+        } else if (auxVerbs.includes(lowerWord)) {
+          className = 'aux-verb';
+        } else if (adverbs.includes(lowerWord)) {
+          className = 'adverb';
+        } else if (objects.includes(lowerWord)) {
+          className = 'object';
+        }
+
+        // اگر کلمه نقطه یا علامت نگارشی دارد، آن را حفظ می‌کنیم
+        const punctuation = word.match(/[.,!?]$/) ? word.slice(-1) : '';
+        return `<span class="${className}">${lowerWord}${punctuation}</span>`;
+      })
+      .join(" ");
+    maxSliderValue = segments.length;
+  } else {
+    segments = soundDe.split("");
+    soundContent = segments.map((char) => `<span>${char}</span>`).join("");
+    maxSliderValue = segments.length;
+  }
+
+  const itemBottom = document.createElement("div");
+  itemBottom.classList.add("item-bottom");
+  itemBottom.innerHTML = `
         <div class="sound ${isSentence ? "sentence" : ""} ${
           isSentence ? "" : colorClass
         }">${soundContent}</div>
@@ -106,58 +137,59 @@ function createItem(group) {
         <input type="range" min="0" max="${maxSliderValue || 0}" value="0" step="1" class="reveal-slider">
     `;
 
-    itemBottom.dataset.revealIndex = "0";
+  itemBottom.dataset.revealIndex = "0";
 
-    const playButton = itemBottom.querySelector(".play-btn");
-    const audio = itemBottom.querySelector("audio");
-    playButton.addEventListener("click", () => {
-      audio.play();
+  const playButton = itemBottom.querySelector(".play-btn");
+  const audio = itemBottom.querySelector("audio");
+  playButton.addEventListener("click", () => {
+    audio.play();
+  });
+
+  const deleteButton = itemBottom.querySelector(".delete-btn");
+  deleteButton.addEventListener("click", () => {
+    itemBottom.parentElement.remove();
+  });
+
+  const soundText = itemBottom.querySelector(".sound");
+  soundText.addEventListener("click", () => {
+    const spans = soundText.querySelectorAll("span");
+    const allRevealed = Array.from(spans).every((span) =>
+      span.classList.contains("revealed")
+    );
+    spans.forEach((span) => {
+      span.classList.toggle("revealed", !allRevealed);
     });
-
-    const deleteButton = itemBottom.querySelector(".delete-btn");
-    deleteButton.addEventListener("click", () => {
-      itemDiv.remove();
-    });
-
-    const soundText = itemBottom.querySelector(".sound");
-    soundText.addEventListener("click", () => {
-      const spans = soundText.querySelectorAll("span");
-      const allRevealed = Array.from(spans).every((span) =>
-        span.classList.contains("revealed")
-      );
-      spans.forEach((span) => {
-        span.classList.toggle("revealed", !allRevealed);
-      });
-      itemBottom.dataset.revealIndex = allRevealed ? "0" : spans.length;
-      const slider = itemBottom.querySelector(".reveal-slider");
-      slider.value = allRevealed ? 0 : spans.length;
-      const percentage = (slider.value / maxSliderValue) * 100;
-      slider.style.background = `linear-gradient(to right, #00ff88 ${percentage}%, #34495e ${percentage}%)`;
-    });
-
+    itemBottom.dataset.revealIndex = allRevealed ? "0" : spans.length;
     const slider = itemBottom.querySelector(".reveal-slider");
-    slider.addEventListener("input", () => {
-      const revealIndex = parseInt(slider.value);
-      const spans = soundText.querySelectorAll("span");
-      spans.forEach((span, index) => {
-        span.classList.toggle("revealed", index < revealIndex);
-      });
-      itemBottom.dataset.revealIndex = revealIndex;
-      const percentage = (revealIndex / maxSliderValue) * 100;
-      slider.style.background = `linear-gradient(to right, #00ff88 ${percentage}%, #34495e ${percentage}%)`;
-    });
+    slider.value = allRevealed ? 0 : spans.length;
+    const percentage = (slider.value / maxSliderValue) * 100;
+    slider.style.background = `linear-gradient(to right, #00ff88 ${percentage}%, #34495e ${percentage}%)`;
+  });
 
-    const inputText = itemBottom.querySelector(".input-text");
-    inputText.addEventListener("input", () => {
-      if (inputText.value.trim() === soundDe) {
-        inputText.classList.add("correct");
-      } else {
-        inputText.classList.remove("correct");
-      }
+  const slider = itemBottom.querySelector(".reveal-slider");
+  slider.addEventListener("input", () => {
+    const revealIndex = parseInt(slider.value);
+    const spans = soundText.querySelectorAll("span");
+    spans.forEach((span, index) => {
+      span.classList.toggle("revealed", index < revealIndex);
     });
+    itemBottom.dataset.revealIndex = revealIndex;
+    const percentage = (revealIndex / maxSliderValue) * 100;
+    slider.style.background = `linear-gradient(to right, #00ff88 ${percentage}%, #34495e ${percentage}%)`;
+  });
 
-    return itemBottom;
-  };
+  const inputText = itemBottom.querySelector(".input-text");
+  inputText.addEventListener("input", () => {
+    if (inputText.value.trim() === soundDe) {
+      inputText.classList.add("correct");
+    } else {
+      inputText.classList.remove("correct");
+    }
+  });
+
+  return itemBottom;
+};
+
 
   const mainItemBottom = createItemBottom(mainItem, isMainSentence);
   itemDiv.appendChild(mainItemBottom);

@@ -84,19 +84,51 @@ function createItemBottom(item, isSentence) {
 
     if (isSentence) {
         segments = soundDe.split(" ");
+        let currentIndex = 0; // برای ردیابی موقعیت در جمله
         soundContent = segments
             .map((word) => {
                 let className = '';
                 const cleanWord = word.replace(/[.,!?]/, '').toLowerCase();
+                const punctuation = word.match(/[.,!?]/) ? word.slice(-1) : '';
 
-                // بررسی اجزای جمله
+                // بررسی عبارات چندکلمه‌ای
+                const checkMultiWord = (arr, word, index) => {
+                    if (!arr) return { match: false, length: 1 };
+                    for (let item of arr) {
+                        if (!item) continue;
+                        const words = item.split(" ");
+                        const phrase = segments.slice(index, index + words.length).join(" ").replace(/[.,!?]/, '').toLowerCase();
+                        if (phrase === item.toLowerCase()) {
+                            return { match: true, length: words.length };
+                        }
+                    }
+                    return { match: false, length: 1 };
+                };
+
+                // بررسی عبارات چندکلمه‌ای برای subject
+                let result = checkMultiWord(item.subject, cleanWord, currentIndex);
+                if (result.match) {
+                    className = 'subject';
+                    currentIndex += result.length;
+                    return `<span class="${className}">${word.replace(/[.,!?]$/, '')}${punctuation}</span>`;
+                }
+
+                // بررسی عبارات چندکلمه‌ای برای object
+                result = checkMultiWord(item.object, cleanWord, currentIndex);
+                if (result.match) {
+                    className = 'object';
+                    currentIndex += result.length;
+                    return `<span class="${className}">${word.replace(/[.,!?]$/, '')}${punctuation}</span>`;
+                }
+
+                // بررسی کلمات تکی
                 if (item.subject && item.subject.some(s => s && s.toLowerCase() === cleanWord)) {
                     className = 'subject';
                 } else if (item.verb && item.verb.some(v => v && v.toLowerCase() === cleanWord)) {
                     className = 'verb';
                 } else if (item.auxiliary_verb && item.auxiliary_verb.some(a => a && a.toLowerCase() === cleanWord)) {
                     className = 'aux-verb';
-                } else if (item.object && item.object.some(o => o && o.toLowerCase() === cleanWord)) {
+                } else if (item.object && item.verb.some(o => o && o.toLowerCase() === cleanWord)) {
                     className = 'object';
                 } else if (item.verb_part1 && item.verb_part1.some(vp1 => vp1 && vp1.toLowerCase() === cleanWord)) {
                     className = 'verb_part1';
@@ -104,7 +136,7 @@ function createItemBottom(item, isSentence) {
                     className = 'verb_part2';
                 }
 
-                const punctuation = word.match(/[.,!?]$/) ? word.slice(-1) : '';
+                currentIndex++;
                 return `<span class="${className}">${word.replace(/[.,!?]$/, '')}${punctuation}</span>`;
             })
             .join(" ");

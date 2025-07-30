@@ -554,10 +554,9 @@
           color: #ff9800; /* نارنجی برای فعل کمکی */
       }
 
-      /* در بخش <style> */
-    .item-bottom .sound .verb_part1 {
-        color: #e91e63; /* صورتی تیره برای بخش اول فعل جداشدنی */
-    }
-    .item-bottom .sound .verb_part2 {
-        color: #9c27b0; /* بنفش برای بخش دوم فعل جداشدنی */
-    }
+     .item-bottom .sound .verb_part1 {
+            color: #e91e63; /* صورتی تیره برای بخش اول فعل جداشدنی */
+        }
+        .item-bottom .sound .verb_part2 {
+            color: #9c27b0; /* بنفش برای بخش دوم فعل جداشدنی */
+        }

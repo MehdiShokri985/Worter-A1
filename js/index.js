@@ -76,52 +76,50 @@ function createItem(group) {
     `;
 
 function createItemBottom(item, isSentence) {
-  let soundContent = "";
-  let maxSliderValue;
-  let segments;
+    let soundContent = "";
+    let maxSliderValue;
+    let segments;
 
-  // بررسی وجود item.Sound_de و رشته بودن آن
-  const soundDe = item.Sound_de && typeof item.Sound_de === 'string' ? item.Sound_de.trim() : '';
+    const soundDe = item.Sound_de && typeof item.Sound_de === 'string' ? item.Sound_de.trim() : '';
 
-  if (isSentence) {
-    segments = soundDe.split(" ");
-    soundContent = segments
-      .map((word, index) => {
-        let className = '';
-        const cleanWord = word.toLowerCase().replace(/[.,!?]/, ''); // حذف علائم نگارشی برای مقایسه
+    if (isSentence) {
+        segments = soundDe.split(" ");
+        soundContent = segments
+            .map((word) => {
+                let className = '';
+                const cleanWord = word.replace(/[.,!?]/, '').toLowerCase();
 
-        // بررسی اجزای جمله از ویژگی‌های شیء
-        if (item.subject && item.subject[index] && cleanWord === item.subject[index].toLowerCase()) {
-          className = 'subject';
-        } else if (item.verb && item.verb[index] && cleanWord === item.verb[index].toLowerCase()) {
-          className = 'verb';
-        } else if (item.auxiliary_verb && item.auxiliary_verb[index] && cleanWord === item.auxiliary_verb[index].toLowerCase()) {
-          className = 'aux-verb';
-        } else if (item.object && item.object[index] && cleanWord === item.object[index].toLowerCase()) {
-          className = 'object';
-        } else if (item.verb_part1 && item.verb_part1[index] && cleanWord === item.verb_part1[index].toLowerCase()) {
-          className = 'verb_part1';
-        } else if (item.verb_part2 && item.verb_part2[index] && cleanWord === item.verb_part2[index].toLowerCase()) {
-          className = 'verb_part2';
-        }
+                // بررسی اجزای جمله
+                if (item.subject && item.subject.some(s => s && s.toLowerCase() === cleanWord)) {
+                    className = 'subject';
+                } else if (item.verb && item.verb.some(v => v && v.toLowerCase() === cleanWord)) {
+                    className = 'verb';
+                } else if (item.auxiliary_verb && item.auxiliary_verb.some(a => a && a.toLowerCase() === cleanWord)) {
+                    className = 'aux-verb';
+                } else if (item.object && item.object.some(o => o && o.toLowerCase() === cleanWord)) {
+                    className = 'object';
+                } else if (item.verb_part1 && item.verb_part1.some(vp1 => vp1 && vp1.toLowerCase() === cleanWord)) {
+                    className = 'verb_part1';
+                } else if (item.verb_part2 && item.verb_part2.some(vp2 => vp2 && vp2.toLowerCase() === cleanWord)) {
+                    className = 'verb_part2';
+                }
 
-        // حفظ علائم نگارشی
-        const punctuation = word.match(/[.,!?]$/) ? word.slice(-1) : '';
-        return `<span class="${className}">${cleanWord}${punctuation}</span>`;
-      })
-      .join(" ");
-    maxSliderValue = segments.length;
-  } else {
-    segments = soundDe.split("");
-    soundContent = segments.map((char) => `<span>${char}</span>`).join("");
-    maxSliderValue = segments.length;
-  }
+                const punctuation = word.match(/[.,!?]$/) ? word.slice(-1) : '';
+                return `<span class="${className}">${word.replace(/[.,!?]$/, '')}${punctuation}</span>`;
+            })
+            .join(" ");
+        maxSliderValue = segments.length;
+    } else {
+        segments = soundDe.split("");
+        soundContent = segments.map((char) => `<span>${char}</span>`).join("");
+        maxSliderValue = segments.length;
+    }
 
-  const itemBottom = document.createElement("div");
-  itemBottom.classList.add("item-bottom");
-  itemBottom.innerHTML = `
+    const itemBottom = document.createElement("div");
+    itemBottom.classList.add("item-bottom");
+    itemBottom.innerHTML = `
         <div class="sound ${isSentence ? "sentence" : ""} ${
-          isSentence ? "" : colorClass
+            isSentence ? "" : colorClass
         }">${soundContent}</div>
         <input type="text" class="input-text" placeholder="Testen Sie Ihr Schreiben.">
         <audio src="audio/${item.file || ''}" preload="none"></audio>
@@ -132,57 +130,57 @@ function createItemBottom(item, isSentence) {
         <input type="range" min="0" max="${maxSliderValue || 0}" value="0" step="1" class="reveal-slider">
     `;
 
-  itemBottom.dataset.revealIndex = "0";
+    itemBottom.dataset.revealIndex = "0";
 
-  const playButton = itemBottom.querySelector(".play-btn");
-  const audio = itemBottom.querySelector("audio");
-  playButton.addEventListener("click", () => {
-    audio.play();
-  });
-
-  const deleteButton = itemBottom.querySelector(".delete-btn");
-  deleteButton.addEventListener("click", () => {
-    itemBottom.parentElement.remove();
-  });
-
-  const soundText = itemBottom.querySelector(".sound");
-  soundText.addEventListener("click", () => {
-    const spans = soundText.querySelectorAll("span");
-    const allRevealed = Array.from(spans).every((span) =>
-      span.classList.contains("revealed")
-    );
-    spans.forEach((span) => {
-      span.classList.toggle("revealed", !allRevealed);
+    const playButton = itemBottom.querySelector(".play-btn");
+    const audio = itemBottom.querySelector("audio");
+    playButton.addEventListener("click", () => {
+        audio.play();
     });
-    itemBottom.dataset.revealIndex = allRevealed ? "0" : spans.length;
+
+    const deleteButton = itemBottom.querySelector(".delete-btn");
+    deleteButton.addEventListener("click", () => {
+        itemBottom.parentElement.remove();
+    });
+
+    const soundText = itemBottom.querySelector(".sound");
+    soundText.addEventListener("click", () => {
+        const spans = soundText.querySelectorAll("span");
+        const allRevealed = Array.from(spans).every((span) =>
+            span.classList.contains("revealed")
+        );
+        spans.forEach((span) => {
+            span.classList.toggle("revealed", !allRevealed);
+        });
+        itemBottom.dataset.revealIndex = allRevealed ? "0" : spans.length;
+        const slider = itemBottom.querySelector(".reveal-slider");
+        slider.value = allRevealed ? 0 : spans.length;
+        const percentage = (slider.value / maxSliderValue) * 100;
+        slider.style.background = `linear-gradient(to right, #00ff88 ${percentage}%, #34495e ${percentage}%)`;
+    });
+
     const slider = itemBottom.querySelector(".reveal-slider");
-    slider.value = allRevealed ? 0 : spans.length;
-    const percentage = (slider.value / maxSliderValue) * 100;
-    slider.style.background = `linear-gradient(to right, #00ff88 ${percentage}%, #34495e ${percentage}%)`;
-  });
-
-  const slider = itemBottom.querySelector(".reveal-slider");
-  slider.addEventListener("input", () => {
-    const revealIndex = parseInt(slider.value);
-    const spans = soundText.querySelectorAll("span");
-    spans.forEach((span, index) => {
-      span.classList.toggle("revealed", index < revealIndex);
+    slider.addEventListener("input", () => {
+        const revealIndex = parseInt(slider.value);
+        const spans = soundText.querySelectorAll("span");
+        spans.forEach((span, index) => {
+            span.classList.toggle("revealed", index < revealIndex);
+        });
+        itemBottom.dataset.revealIndex = revealIndex;
+        const percentage = (revealIndex / maxSliderValue) * 100;
+        slider.style.background = `linear-gradient(to right, #00ff88 ${percentage}%, #34495e ${percentage}%)`;
     });
-    itemBottom.dataset.revealIndex = revealIndex;
-    const percentage = (revealIndex / maxSliderValue) * 100;
-    slider.style.background = `linear-gradient(to right, #00ff88 ${percentage}%, #34495e ${percentage}%)`;
-  });
 
-  const inputText = itemBottom.querySelector(".input-text");
-  inputText.addEventListener("input", () => {
-    if (inputText.value.trim() === soundDe) {
-      inputText.classList.add("correct");
-    } else {
-      inputText.classList.remove("correct");
-    }
-  });
+    const inputText = itemBottom.querySelector(".input-text");
+    inputText.addEventListener("input", () => {
+        if (inputText.value.trim() === soundDe) {
+            inputText.classList.add("correct");
+        } else {
+            inputText.classList.remove("correct");
+        }
+    });
 
-  return itemBottom;
+    return itemBottom;
 }
 
   const mainItemBottom = createItemBottom(mainItem, isMainSentence);

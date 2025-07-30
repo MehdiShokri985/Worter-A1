@@ -1,4 +1,4 @@
-const all_verbs = [
+export const all_verbs = [
   "wohnen",
   "essen",
   "trinken",
@@ -278,4 +278,4 @@ const all_verbs = [
   "wieder",
 ];
 
-export {all_verbs};
+

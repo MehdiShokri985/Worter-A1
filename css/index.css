@@ -126,7 +126,7 @@ h1 {
   text-align: center;
   letter-spacing: normal;
   text-transform: none;
-  color: #dbde13;
+  color: #fbff00;
 }
 
 .item-top .translate {
@@ -346,7 +346,7 @@ h1 {
   position: absolute;
   top: 10px;
   left: 10px;
-  color: #f1c40f; /* Yellow color for the icon */
+  color: #fbff00; /* Yellow color for the icon */
   font-size: 1.2em;
   cursor: pointer;
   z-index: 5;

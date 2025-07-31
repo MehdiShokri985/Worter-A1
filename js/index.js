@@ -278,7 +278,7 @@ function createItem(group) {
       const slider = itemBottom.querySelector(".reveal-slider");
       slider.value = allRevealed ? 0 : spans.length;
       const percentage = (slider.value / maxSliderValue) * 100;
-      slider.style.background = `linear-gradient(to right, #00ff88 ${percentage}%, #34495e ${percentage}%)`;
+      slider.style.background = `linear-gradient(to right, #00ff88 ${percentage}%, #2f547fff ${percentage}%)`;
     });
 
     const slider = itemBottom.querySelector(".reveal-slider");

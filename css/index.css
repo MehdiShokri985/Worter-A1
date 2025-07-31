@@ -95,7 +95,7 @@ h1 {
 }
 
 .item {
-  background-color: #2c3b55;
+  background-color: #283a5a;
   border-radius: 10px;
   padding: 0px 15px 17px 15px;
   margin-bottom: 10px;
@@ -234,7 +234,7 @@ h1 {
     #00ff88 0%,
     #00ff88 0%,
     #34495e 0%,
-    #34495e 100%
+    #354267 100%
   ); /* پس‌زمینه دو رنگ */
   border-radius: 4px;
   cursor: pointer;

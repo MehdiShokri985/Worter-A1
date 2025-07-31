@@ -577,5 +577,5 @@ h1 {
   letter-spacing: normal;
   text-transform: none;
   color: #79fffd;
-  margin-right: 10px; /* فاصله از filename */
+  /* margin-right: 10px; فاصله از filename */
 }

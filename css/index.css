@@ -519,12 +519,7 @@ h1 {
     right: 10px;
   }
 
-  .type-icon {
-    font-size: 1em;
-    width: 18px;
-    height: 18px;
-    left: 35px; /* Adjusted for mobile */
-  }
+
 }
 
 /* استایل برای نسخه موبایل */
@@ -568,26 +563,19 @@ h1 {
   color: #00d5ff; /* بنفش برای بخش دوم فعل جداشدنی */
 }
 
-/* Type Icon Styles */
-.type-icon {
-  position: absolute;
-  top: 10px;
-  left: 40px; /* Adjusted to place next to root-icon */
-  color: #fbff00; /* Yellow color for the icon */
-  font-size: 1.2em;
-  z-index: 5;
-  padding: 5px;
-  border-radius: 50%; /* Make it round */
-  background-color: rgba(241, 196, 15, 0.1); /* Subtle background */
-  transition: background-color 0.2s ease;
-  width: 20px; /* Fixed width and height for a perfect circle */
-  height: 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.item-top .type {
+  font-size: 0.8em;
   font-weight: bold;
-}
-
-.type-icon:hover {
-  background-color: rgba(241, 196, 15, 0.3); /* Darker background on hover */
+  margin-bottom: 5px;
+  background-color: #7b810a29;
+  padding: 3px 6px;
+  border-radius: 0px 0px 5px 5px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  display: inline-block;
+  min-width: auto;
+  text-align: center;
+  letter-spacing: normal;
+  text-transform: none;
+  color: #fbff00;
+  margin-right: 10px; /* فاصله از filename */
 }

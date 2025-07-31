@@ -74,13 +74,13 @@ function createItem(group) {
     rootIconHtml = `<div class="root-icon" data-root-content="${mainItem.root}">i</div>`;
   }
 
-  let typeIconHtml = "";
+  let typeHtml = "";
   if (
     mainItem.type &&
     typeof mainItem.type === "string" &&
     mainItem.type.trim() !== ""
   ) {
-    typeIconHtml = `<div class="type-icon">${mainItem.type}</div>`;
+    typeHtml = `<div class="type">${mainItem.type}</div>`;
   }
 
   const itemDiv = document.createElement("div");
@@ -89,10 +89,11 @@ function createItem(group) {
   itemDiv.innerHTML = `
         <div class="item-top">
             <div class="filename">${mainItem.Filename || ""}</div>
+            ${typeHtml}
             <div class="translate">${mainItem.translate_fa || ""}</div>
         </div>
         ${rootIconHtml}
-        ${typeIconHtml}
+        
     `;
 
   function createItemBottom(item, isSentence) {

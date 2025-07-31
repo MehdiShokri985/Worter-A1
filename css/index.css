@@ -1,562 +1,562 @@
-        body {
-            background-color: #1a252f;
-            color: #f1c40f;
-            font-family: 'Vazir', Arial, sans-serif;
-            margin: 0;
-            padding: 20px;
-            direction: rtl;
-        }
-
-        h1 {
-            text-align: center;
-            color: #f1c40f; /* رنگ زرد */
-            font-size: 1.2em;
-            background: #1a252f; /* پس‌زمینه سورمه‌ای */
-            padding: 15px 0;
-            width: 100%;
-            margin: 0 auto 20px auto;
-            border-bottom: 3px solid #f1c40f; /* خط زیرین زرد */
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); /* سایه ملایم */
-            display: block;
-            max-width: 800px;
-            font-weight: 100;
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            position: relative;
-        }
-
-        .accordion {
-            margin-bottom: 20px;
-        }
-
-        .accordion-header {
-            background-color: #2c3e50;
-            border-radius: 10px;
-            padding: 15px;
-            cursor: pointer;
-            color: #00ff88;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-            margin-bottom: 7px;
-            position: sticky;
-            top: 0;
-            z-index: 10;
-            direction: ltr;
-        }
-
-        @media (hover: hover) and (pointer: fine) {
-            .accordion-header:hover {
-                background-color: #34495e;
-            }
-            .item-bottom button.play-btn:hover {
-                background-color: #f39c12;
-            }
-            .item-bottom button.delete-btn:hover {
-                background-color: #c0392b;
-            }
-        }
-
-        .accordion-content {
-            display: none;
-            padding: 10px;
-            background-color: #2c3e50;
-            border-radius: 6px 6px 10px 10px;
-            max-height: calc(100vh - 150px);
-            overflow-y: auto;
-            scrollbar-width: thin;
-            scrollbar-color: #00ff88 #34495e;
-        }
-
-        .accordion-content::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        .accordion-content::-webkit-scrollbar-track {
-            background: #34495e;
-            border-radius: 10px;
-        }
-
-        .accordion-content::-webkit-scrollbar-thumb {
-            background: #00ff88;
-            border-radius: 10px;
-        }
-
-        .accordion-content::-webkit-scrollbar-thumb:hover {
-            background: #00cc6e;
-        }
-
-        .accordion-content.active {
-            display: block;
-        }
-
-        .item {
-            background-color: #34495e;
-            border-radius: 10px;
-            padding: 0px 15px 17px 15px;
-            margin-bottom: 10px;
-            display: flex;
-            flex-direction: column;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-            position: relative; /* برای موقعیت‌دهی آیکون ریشه */
-        }
-
-        .item-top {
-            justify-content: flex-end;
-            align-items: center;
-            gap: 20px;
-            text-align: right;
-        }
-
-        .item-top .filename {
-            font-size: 0.8em;
-            font-weight: bold;
-            /* color: #333333; */
-            margin-bottom: 5px;
-            background-color: #7b810a29;
-            padding: 3px 6px;
-            border-radius: 0px  0px 5px 5px;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-            display: inline-block;
-            min-width: auto;
-            text-align: center;
-            letter-spacing: normal;
-            text-transform: none;
-            color: #dbde13;
-        }
-
-        .item-top .translate {
-              font-size: 1.2em; 
-                color: #c5fff7; 
-                margin-top: 15px; 
-                display: block;
-                margin-right: 10px;
-        }
-
-        
-        .item-bottom {
-            margin-top: 15px;
-            text-align: left;
-            direction: ltr;
-            position: relative;
-        }
-
-        .item-bottom .sound {
-            font-size: 1.2em;
-            color: #93d2ff; /* Default green for Sound_de */
-            cursor: pointer;
-            margin-bottom: 25px;
-        }
-
-        /* New color classes for Sound_de */
-        .item-bottom .sound.pink-text {
-            color: #ff69b4; /* Beautiful Pink */
-        }
-        .item-bottom .sound.blue-text {
-            color: #6495ed; /* Beautiful Blue */
-        }
-        .item-bottom .sound.green-text {
-            color: #07c84a; /* Beautiful Green */
-        }
-
-
-        .item-bottom .sound span {
-            filter: blur(5px);
-            transition: filter 0.3s ease;
-        }
-
-        .item-bottom .sound span.revealed {
-            filter: none;
-        }
-
-        .item-bottom .sentence {
-            font-style: italic;
-            color: #ffae00;
-        }
-
-        .item-bottom audio {
-            margin-top: 10px;
-        }
-
-        /* هماهنگی دکمه‌های Play و Delete برای تراز بهتر */
-        .item-bottom button.play-btn,
-        .item-bottom button.delete-btn {
-            background-color: #7799ed; /* رنگ دکمه Play */
-            color: #2c3e50;
-            border: none;
-            padding: 8px 12px;
-            border-radius: 5px; /* گوشه‌های گردتر برای هماهنگی */
-            cursor: pointer;
-            font-size: 0.9em;
-            height: 20px; /* ارتفاع یکسان با دکمه‌های مثبت و منفی */
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* سایه مشابه */
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-
-        .item-bottom button.delete-btn {
-            background-color: #c23325; /* رنگ دکمه Delete */
-            color: #ecf0f1;
-        }
-
-        .item-bottom button.play-btn:hover {
-            background-color: #91b0ff;
-            /* transform: translateY(-2px); */
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-        }
-        
-        .item-bottom button.delete-btn:hover {
-            background-color: #c0392b;
-            /* transform: translateY(-2px); */
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-        }
-
-        .item-bottom .control-buttons {
-            position: absolute;
-            bottom: 5px;
-            right: 5px;
-            display: flex;
-            gap: 8px; /* فاصله بین دکمه‌ها */
-            align-items: center; /* تراز عمودی */
-        }
-
-
-        /* range ------------------------- */
-
-        .item-bottom input[type="range"] {
-            width: 120px; /* عرض مناسب */
-            height: 8px; /* ضخامت مسیر */
-            background: linear-gradient(to right, #00ff88 0%, #00ff88 0%, #34495e 0%, #34495e 100%); /* پس‌زمینه دو رنگ */
-            border-radius: 4px;
-            cursor: pointer;
-            -webkit-appearance: none;
-            appearance: none;
-            outline: none;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-            position: relative;
-        }
-
-        /* به‌روزرسانی پس‌زمینه بر اساس مقدار اسلایدر */
-        .item-bottom input[type="range"]::-webkit-slider-runnable-track {
-            height: 8px;
-            border-radius: 4px;
-            background: transparent; /* برای استفاده از linear-gradient والد */
-        }
-
-        .item-bottom input[type="range"]::-moz-range-track {
-            height: 8px;
-            border-radius: 4px;
-            background: transparent;
-        }
-
-        .item-bottom input[type="range"]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 18px;
-            height: 18px;
-            background: #00ff88;
-            border-radius: 50%;
-            cursor: pointer;
-            border: 2px solid #2c3e50;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-            margin-top: -5px; /* تنظیم موقعیت عمودی برای قرار گرفتن در وسط */
-        }
-
-        .item-bottom input[type="range"]::-webkit-slider-thumb:hover {
-            transform: scale(1.1);
-            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.4);
-        }
-
-        .item-bottom input[type="range"]::-moz-range-thumb {
-            width: 14px;
-            height: 14px;
-            background: #00ff88;
-            border-radius: 50%;
-            cursor: pointer;
-            border: 2px solid #2c3e50;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-
-        .item-bottom input[type="range"]::-moz-range-thumb:hover {
-            transform: scale(1.1);
-            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.4);
-        }
-
-
-        /* range -------------------- */
-        
-
-        .item-bottom .input-text {
-            margin-top: 10px;
-            padding: 5px;
-            font-size: 1em;
-            width: 98%;
-            border-radius: 5px;
-            border: none;
-            display: none;
-            background-color: #aed2f5;
-            margin-bottom: 10px;
-        }
-
-        .item-bottom .input-text.correct {
-            background-color: #2ecc71;
-            color: #fff;
-        }
-
-        .accordion-header .toggle-textbox-btn , .accordion-header .test-btn  {
-            background-color: #00ff88;
-            color: #1a252f;
-            border: none;
-            padding: 5px 10px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 0.8em;
-            align-items: center;
-            height: 20px;
-            display: inline-flex;
-        }
-
-        .accordion-header .toggle-textbox-btn:disabled {
-            background-color: #cccccc;
-            cursor: not-allowed;
-            opacity: 0.6;
-        }
-
-        .accordion-header .test-btn {
-            background-color: #00bcd4d9;
-            margin-left: 10px;
-        }
-
-        .accordion-header .test-btn:hover {
-            background-color: #4ee0f3d9;
-        }
-
-        /* Root Icon (i) Styles */
-        .root-icon {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            color: #f1c40f; /* Yellow color for the icon */
-            font-size: 1.2em;
-            cursor: pointer;
-            z-index: 5;
-            padding: 5px;
-            border-radius: 50%; /* Make it round */
-            background-color: rgba(241, 196, 15, 0.1); /* Subtle background */
-            transition: background-color 0.2s ease;
-            width: 20px; /* Fixed width and height for a perfect circle */
-            height: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-weight: bold;
-        }
-
-        .root-icon:hover {
-            background-color: rgba(241, 196, 15, 0.3); /* Darker background on hover */
-        }
-
-        /* Modal Styles */
-        .modal {
-            display: none; /* Hidden by default */
-            position: fixed; /* Stay in place */
-            z-index: 1000; /* Sit on top */
-            left: 0;
-            top: 0;
-            width: 100%; /* Full width */
-            height: 100%; /* Full height */
-            overflow: auto; /* Enable scroll if needed */
-            background-color: rgba(0, 0, 0, 0.7); /* Black w/ opacity */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            pointer-events: none; /* Allows clicks to pass through when hidden */
-        }
-
-        .modal.show {
-            opacity: 1;
-            pointer-events: auto;
-        }
-
-        .modal-content {
-            background-color: rgba(44, 62, 80, 0.8); /* More transparent: 0.5 */
-            margin: auto;
-            padding: 30px;
-            border: 1px solid #f1c40f; /* Yellow border */
-            border-radius: 10px;
-            width: 80%; /* Default width */
-            max-width: 500px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
-            animation: fadeInScale 0.3s ease-out forwards; /* Animation for appearance */
-            color: #ecf0f1; /* Light text color */
-            direction: ltr; /* Content direction LTR */
-            font-size: 1.1em;
-            position: relative; /* For close button positioning */
-            text-align: left; /* Align text to left for LTR */
-        }
-
-        @keyframes fadeInScale {
-            from {
-                opacity: 0;
-                transform: scale(0.9);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
-
-        .modal-content.hide {
-            animation: fadeOutScale 0.3s ease-in forwards; /* Animation for disappearance */
-        }
-
-        @keyframes fadeOutScale {
-            from {
-                opacity: 1;
-                transform: scale(1);
-            }
-            to {
-                opacity: 0;
-                transform: scale(0.9);
-            }
-        }
-
-        .close-button {
-            color: #f1c40f; /* Yellow close button */
-            position: absolute;
-            top: 10px;
-            right: 15px; /* Stay right for LTR content */
-            font-size: 28px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: color 0.2s ease;
-        }
-
-        .close-button:hover,
-        .close-button:focus {
-            color: #e67e22; /* Orange on hover/focus */
-            text-decoration: none;
-        }
-
- 
-
-        @media (max-width: 600px) {
-            .accordion-header .toggle-textbox-btn {
-                font-size: 0.7em;
-                padding: 3px 6px;
-                min-width: 50px;
-                text-align: center;
-            }
-
-            .item-top .filename {
-              margin-right: 10px;
-            }
-
-            .item {
-                padding: 0px 5px 5px 15px;
-                margin-bottom: 10px;
-            }
-
-            .item-top {
-                flex-direction: column;
-                align-items: flex-end;
-            }
-
-            .item-bottom {
-                width: 100%;
-                text-align: left;
-                direction: ltr;
-            }
-
-            .item-bottom button {
-                margin: 10px 0;
-            }
-            
-            .item-bottom input[type="range"] {
-                width: 120px;
-                height: 6px;
-                margin-bottom: 12px;
-            }
-
-            .item-bottom input[type="range"]::-webkit-slider-thumb {
-                width: 16px;
-                height: 16px;
-                margin-top: -5px; /* تنظیم موقعیت عمودی در موبایل */
-            }
-
-            .item-bottom input[type="range"]::-moz-range-thumb {
-                width: 12px;
-                height: 12px;
-            }
-
-            .root-icon {
-                /* top: 5px;
+body {
+  background-color: #1a252f;
+  color: #f1c40f;
+  font-family: "Vazir", Arial, sans-serif;
+  margin: 0;
+  padding: 20px;
+  direction: rtl;
+}
+
+h1 {
+  text-align: center;
+  color: #f1c40f; /* رنگ زرد */
+  font-size: 1.2em;
+  background: #1a252f; /* پس‌زمینه سورمه‌ای */
+  padding: 15px 0;
+  width: 100%;
+  margin: 0 auto 20px auto;
+  border-bottom: 3px solid #f1c40f; /* خط زیرین زرد */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); /* سایه ملایم */
+  display: block;
+  max-width: 800px;
+  font-weight: 100;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.accordion {
+  margin-bottom: 20px;
+}
+
+.accordion-header {
+  background-color: #2c3e50;
+  border-radius: 10px;
+  padding: 15px;
+  cursor: pointer;
+  color: #00ff88;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  margin-bottom: 7px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  direction: ltr;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .accordion-header:hover {
+    background-color: #34495e;
+  }
+  .item-bottom button.play-btn:hover {
+    background-color: #f39c12;
+  }
+  .item-bottom button.delete-btn:hover {
+    background-color: #c0392b;
+  }
+}
+
+.accordion-content {
+  display: none;
+  padding: 10px;
+  background-color: #2c3e50;
+  border-radius: 6px 6px 10px 10px;
+  max-height: calc(100vh - 150px);
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #00ff88 #34495e;
+}
+
+.accordion-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.accordion-content::-webkit-scrollbar-track {
+  background: #34495e;
+  border-radius: 10px;
+}
+
+.accordion-content::-webkit-scrollbar-thumb {
+  background: #00ff88;
+  border-radius: 10px;
+}
+
+.accordion-content::-webkit-scrollbar-thumb:hover {
+  background: #00cc6e;
+}
+
+.accordion-content.active {
+  display: block;
+}
+
+.item {
+  background-color: #34495e;
+  border-radius: 10px;
+  padding: 0px 15px 17px 15px;
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  position: relative; /* برای موقعیت‌دهی آیکون ریشه */
+}
+
+.item-top {
+  justify-content: flex-end;
+  align-items: center;
+  gap: 20px;
+  text-align: right;
+}
+
+.item-top .filename {
+  font-size: 0.8em;
+  font-weight: bold;
+  /* color: #333333; */
+  margin-bottom: 5px;
+  background-color: #7b810a29;
+  padding: 3px 6px;
+  border-radius: 0px 0px 5px 5px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  display: inline-block;
+  min-width: auto;
+  text-align: center;
+  letter-spacing: normal;
+  text-transform: none;
+  color: #dbde13;
+}
+
+.item-top .translate {
+  font-size: 1.2em;
+  color: #c5fff7;
+  margin-top: 15px;
+  display: block;
+  margin-right: 10px;
+}
+
+.item-bottom {
+  margin-top: 15px;
+  text-align: left;
+  direction: ltr;
+  position: relative;
+}
+
+.item-bottom .sound {
+  font-size: 1.2em;
+  color: #93d2ff; /* Default green for Sound_de */
+  cursor: pointer;
+  margin-bottom: 25px;
+}
+
+/* New color classes for Sound_de */
+.item-bottom .sound.pink-text {
+  color: #ff69b4; /* Beautiful Pink */
+}
+.item-bottom .sound.blue-text {
+  color: #6495ed; /* Beautiful Blue */
+}
+.item-bottom .sound.green-text {
+  color: #07c84a; /* Beautiful Green */
+}
+
+.item-bottom .sound span {
+  filter: blur(5px);
+  transition: filter 0.3s ease;
+}
+
+.item-bottom .sound span.revealed {
+  filter: none;
+}
+
+.item-bottom .sentence {
+  font-style: italic;
+  color: #ffae00;
+}
+
+.item-bottom audio {
+  margin-top: 10px;
+}
+
+/* هماهنگی دکمه‌های Play و Delete برای تراز بهتر */
+.item-bottom button.play-btn,
+.item-bottom button.delete-btn {
+  background-color: #7799ed; /* رنگ دکمه Play */
+  color: #2c3e50;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 5px; /* گوشه‌های گردتر برای هماهنگی */
+  cursor: pointer;
+  font-size: 0.9em;
+  height: 20px; /* ارتفاع یکسان با دکمه‌های مثبت و منفی */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* سایه مشابه */
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.item-bottom button.delete-btn {
+  background-color: #c23325; /* رنگ دکمه Delete */
+  color: #ecf0f1;
+}
+
+.item-bottom button.play-btn:hover {
+  background-color: #91b0ff;
+  /* transform: translateY(-2px); */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.item-bottom button.delete-btn:hover {
+  background-color: #c0392b;
+  /* transform: translateY(-2px); */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.item-bottom .control-buttons {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  display: flex;
+  gap: 8px; /* فاصله بین دکمه‌ها */
+  align-items: center; /* تراز عمودی */
+}
+
+/* range ------------------------- */
+
+.item-bottom input[type="range"] {
+  width: 120px; /* عرض مناسب */
+  height: 8px; /* ضخامت مسیر */
+  background: linear-gradient(
+    to right,
+    #00ff88 0%,
+    #00ff88 0%,
+    #34495e 0%,
+    #34495e 100%
+  ); /* پس‌زمینه دو رنگ */
+  border-radius: 4px;
+  cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+  outline: none;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  position: relative;
+}
+
+/* به‌روزرسانی پس‌زمینه بر اساس مقدار اسلایدر */
+.item-bottom input[type="range"]::-webkit-slider-runnable-track {
+  height: 8px;
+  border-radius: 4px;
+  background: transparent; /* برای استفاده از linear-gradient والد */
+}
+
+.item-bottom input[type="range"]::-moz-range-track {
+  height: 8px;
+  border-radius: 4px;
+  background: transparent;
+}
+
+.item-bottom input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  background: #00ff88;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid #2c3e50;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  margin-top: -5px; /* تنظیم موقعیت عمودی برای قرار گرفتن در وسط */
+}
+
+.item-bottom input[type="range"]::-webkit-slider-thumb:hover {
+  transform: scale(1.1);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.4);
+}
+
+.item-bottom input[type="range"]::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  background: #00ff88;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid #2c3e50;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.item-bottom input[type="range"]::-moz-range-thumb:hover {
+  transform: scale(1.1);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.4);
+}
+
+/* range -------------------- */
+
+.item-bottom .input-text {
+  margin-top: 10px;
+  padding: 5px;
+  font-size: 1em;
+  width: 98%;
+  border-radius: 5px;
+  border: none;
+  display: none;
+  background-color: #aed2f5;
+  margin-bottom: 10px;
+}
+
+.item-bottom .input-text.correct {
+  background-color: #2ecc71;
+  color: #fff;
+}
+
+.accordion-header .toggle-textbox-btn,
+.accordion-header .test-btn {
+  background-color: #00ff88;
+  color: #1a252f;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.8em;
+  align-items: center;
+  height: 20px;
+  display: inline-flex;
+}
+
+.accordion-header .toggle-textbox-btn:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.accordion-header .test-btn {
+  background-color: #00bcd4d9;
+  margin-left: 10px;
+}
+
+.accordion-header .test-btn:hover {
+  background-color: #4ee0f3d9;
+}
+
+/* Root Icon (i) Styles */
+.root-icon {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  color: #f1c40f; /* Yellow color for the icon */
+  font-size: 1.2em;
+  cursor: pointer;
+  z-index: 5;
+  padding: 5px;
+  border-radius: 50%; /* Make it round */
+  background-color: rgba(241, 196, 15, 0.1); /* Subtle background */
+  transition: background-color 0.2s ease;
+  width: 20px; /* Fixed width and height for a perfect circle */
+  height: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+}
+
+.root-icon:hover {
+  background-color: rgba(241, 196, 15, 0.3); /* Darker background on hover */
+}
+
+/* Modal Styles */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1000; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgba(0, 0, 0, 0.7); /* Black w/ opacity */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none; /* Allows clicks to pass through when hidden */
+}
+
+.modal.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-content {
+  background-color: rgba(44, 62, 80, 0.8); /* More transparent: 0.5 */
+  margin: auto;
+  padding: 30px;
+  border: 1px solid #f1c40f; /* Yellow border */
+  border-radius: 10px;
+  width: 80%; /* Default width */
+  max-width: 500px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+  animation: fadeInScale 0.3s ease-out forwards; /* Animation for appearance */
+  color: #ecf0f1; /* Light text color */
+  direction: ltr; /* Content direction LTR */
+  font-size: 1.1em;
+  position: relative; /* For close button positioning */
+  text-align: left; /* Align text to left for LTR */
+}
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.modal-content.hide {
+  animation: fadeOutScale 0.3s ease-in forwards; /* Animation for disappearance */
+}
+
+@keyframes fadeOutScale {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+}
+
+.close-button {
+  color: #f1c40f; /* Yellow close button */
+  position: absolute;
+  top: 10px;
+  right: 15px; /* Stay right for LTR content */
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.close-button:hover,
+.close-button:focus {
+  color: #e67e22; /* Orange on hover/focus */
+  text-decoration: none;
+}
+
+@media (max-width: 600px) {
+  .accordion-header .toggle-textbox-btn {
+    font-size: 0.7em;
+    padding: 3px 6px;
+    min-width: 50px;
+    text-align: center;
+  }
+
+  .item-top .filename {
+    margin-right: 10px;
+  }
+
+  .item {
+    padding: 0px 5px 5px 15px;
+    margin-bottom: 10px;
+  }
+
+  .item-top {
+    flex-direction: column;
+    align-items: flex-end;
+  }
+
+  .item-bottom {
+    width: 100%;
+    text-align: left;
+    direction: ltr;
+  }
+
+  .item-bottom button {
+    margin: 10px 0;
+  }
+
+  .item-bottom input[type="range"] {
+    width: 120px;
+    height: 6px;
+    margin-bottom: 12px;
+  }
+
+  .item-bottom input[type="range"]::-webkit-slider-thumb {
+    width: 16px;
+    height: 16px;
+    margin-top: -5px; /* تنظیم موقعیت عمودی در موبایل */
+  }
+
+  .item-bottom input[type="range"]::-moz-range-thumb {
+    width: 12px;
+    height: 12px;
+  }
+
+  .root-icon {
+    /* top: 5px;
                 left: 5px; */
-                font-size: 1em;
-                width: 18px;
-                height: 18px;
-            }
+    font-size: 1em;
+    width: 18px;
+    height: 18px;
+  }
 
-            .modal-content {
-                width: 75%; /* Slightly narrower on mobile: 75% */
-                padding: 20px;
-                font-size: 1em;
-            }
+  .modal-content {
+    width: 75%; /* Slightly narrower on mobile: 75% */
+    padding: 20px;
+    font-size: 1em;
+  }
 
-            .close-button {
-                font-size: 24px;
-                top: 5px;
-                right: 10px;
-            }
-        }
-        
-        /* استایل برای نسخه موبایل */
-        @media (max-width: 600px) {
-            .item-bottom .control-buttons {
-                gap: 5px; /* فاصله کمتر در موبایل */
-                 bottom:-5px;
-            }
+  .close-button {
+    font-size: 24px;
+    top: 5px;
+    right: 10px;
+  }
+}
 
-            .item-bottom button.play-btn,
-            .item-bottom button.delete-btn {
-                height: 20px; /* ارتفاع هماهنگ در موبایل */
-                font-size: 0.8em;
-                padding: 6px 10px;
-            }
-        }
+/* استایل برای نسخه موبایل */
+@media (max-width: 600px) {
+  .item-bottom .control-buttons {
+    gap: 5px; /* فاصله کمتر در موبایل */
+    bottom: -5px;
+  }
 
-               /* کلاس‌های جدید برای اجزای جمله */
-      .item-bottom .sound .subject {
-          color: #6cff01; /* زرد برای فاعل */
-      }
-      .item-bottom .sound .verb {
-          color: #36a3f4; /* قرمز برای فعل */
-      }
-      .item-bottom .sound .object {
-          color: #ff4343; /* آبی برای مفعول */
-      }
+  .item-bottom button.play-btn,
+  .item-bottom button.delete-btn {
+    height: 20px; /* ارتفاع هماهنگ در موبایل */
+    font-size: 0.8em;
+    padding: 6px 10px;
+  }
+}
 
-      .item-bottom .sound .adverb {
-          color: #ffae00; /*سبز برای قید */
-      }
-      
-      .item-bottom .sound .aux-verb {
-          color: #b20eff; /* نارنجی برای فعل کمکی */
-      }
+/* کلاس‌های جدید برای اجزای جمله */
+.item-bottom .sound .subject {
+  color: #6cff01; /* زرد برای فاعل */
+}
+.item-bottom .sound .verb {
+  color: #36a3f4; /* قرمز برای فعل */
+}
+.item-bottom .sound .object {
+  color: #f95353; /* آبی برای مفعول */
+}
 
-     .item-bottom .sound .verb_part1 {
-            color: #36a3f4; /* صورتی تیره برای بخش اول فعل جداشدنی */
-        }
-        .item-bottom .sound .verb_part2 {
-            color: #36a3f4; /* بنفش برای بخش دوم فعل جداشدنی */
-        }
+.item-bottom .sound .adverb {
+  color: #ffae00; /*سبز برای قید */
+}
+
+.item-bottom .sound .aux-verb {
+  color: #cd63ff; /*  برای فعل کمکی */
+}
+
+.item-bottom .sound .verb_part1 {
+  color: #36a3f4; /* صورتی تیره برای بخش اول فعل جداشدنی */
+}
+.item-bottom .sound .verb_part2 {
+  color: #36a3f4; /* بنفش برای بخش دوم فعل جداشدنی */
+}

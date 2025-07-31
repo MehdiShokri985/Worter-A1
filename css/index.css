@@ -57,7 +57,7 @@ h1 {
     background-color: #f39c12;
   }
   .item-bottom button.delete-btn:hover {
-    background-color: #c0392b;
+    background-color: #be4141;
   }
 }
 
@@ -69,7 +69,7 @@ h1 {
   max-height: calc(100vh - 150px);
   overflow-y: auto;
   scrollbar-width: thin;
-  scrollbar-color: #dbde13 #253756;
+  scrollbar-color: #7799ed #253756;
 }
 
 .accordion-content::-webkit-scrollbar {
@@ -184,7 +184,7 @@ h1 {
 .item-bottom button.play-btn,
 .item-bottom button.delete-btn {
   background-color: #7799ed; /* رنگ دکمه Play */
-  color: #2c3e50;
+  color: #00060b;
   border: none;
   padding: 8px 12px;
   border-radius: 5px; /* گوشه‌های گردتر برای هماهنگی */
@@ -199,7 +199,7 @@ h1 {
 }
 
 .item-bottom button.delete-btn {
-  background-color: #c23325; /* رنگ دکمه Delete */
+  background-color: #ec5050; /* رنگ دکمه Delete */
   color: #ecf0f1;
 }
 

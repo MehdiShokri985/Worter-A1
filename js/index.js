@@ -80,7 +80,7 @@ function createItem(group) {
     typeof mainItem.type === "string" &&
     mainItem.type.trim() !== ""
   ) {
-    typeHtml = `<div class="type">${(mainItem.type == "فعل (غیرجداشدنی)") ? "فعل" : mainItem.type}</div>`;
+    typeHtml = `<div class="type">${(mainItem.type === "فعل (غیرجداشدنی)") ? "فعل" : mainItem.type}</div>`;
   }
 
   const itemDiv = document.createElement("div");

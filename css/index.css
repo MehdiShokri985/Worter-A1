@@ -567,7 +567,7 @@ h1 {
   font-size: 0.8em;
   font-weight: bold;
   margin-bottom: 5px;
-  background-color: #7b810a29;
+  background-color: #289dad29;
   padding: 3px 6px;
   border-radius: 0px 0px 5px 5px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
@@ -576,6 +576,6 @@ h1 {
   text-align: center;
   letter-spacing: normal;
   text-transform: none;
-  color: #fbff00;
+  color: #79fffd;
   margin-right: 10px; /* فاصله از filename */
 }

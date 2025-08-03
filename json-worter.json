@@ -6804,8 +6804,8 @@
     "root": "",
     "type": "جمله",
     "subject": ["Rauchen"],
-    "verb": ["ist"],
-    "auxiliary_verb": [null],
+    "verb": ["erlaubt"],
+    "auxiliary_verb": ["ist"],
     "object": [null],
     "verb_part1": [null],
     "verb_part2": [null]
